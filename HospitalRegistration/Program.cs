@@ -6,8 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
-builder.Services.AddScoped<IAppConfiguration, AppConfiguration>();
-builder.Services.AddScoped<IConfigurationBuilder, ConfigurationBuilder>();
+
 
 var app = builder.Build();
 

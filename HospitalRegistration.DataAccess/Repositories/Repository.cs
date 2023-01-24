@@ -1,4 +1,5 @@
 ﻿using HospitalRegistration.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,9 +10,16 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class Repository<T> : IRepository<T>, IDisposable where T : class
     {
+        protected readonly DbContext dbContext;
+        public Repository(DbContext dbContext)
+        {
+            this.dbContext = dbContext;
+        }
+
         public void Add(T entity)
         {
             //TODO
+            //naudoti cia db context
         }
 
         public void AddRange(List<T> entities)
