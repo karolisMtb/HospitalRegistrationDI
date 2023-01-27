@@ -18,7 +18,11 @@ namespace HospitalRegistration.DataAccess.Repositories
         public UnitOfWork(DatabaseContext databaseContext)
         {
             _databaseContext = databaseContext;
-            Patient = // new PatientRepository(_databaseContext);
+            // Patient = new PatientRepository(_databaseContext);
+        }
+        public void SaveChanges()
+        {
+            _databaseContext.SaveChanges();
         }
     }
 }

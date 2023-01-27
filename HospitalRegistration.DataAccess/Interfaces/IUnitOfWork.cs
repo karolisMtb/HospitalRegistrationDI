@@ -8,5 +8,9 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IUnitOfWork
     {
+        IPatientRepository Patients { get;}
+        IDepartmentRepository Departments { get; }
+        IDoctorRepository Doctors { get; }
+        void SaveChanges();
     }
 }

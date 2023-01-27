@@ -1,11 +1,6 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 
 namespace HospitalRegistration.DataAccess.Repositories
@@ -23,6 +18,19 @@ namespace HospitalRegistration.DataAccess.Repositories
             {
                 return dbContext as DatabaseContext;
             }
+        }
+
+        public IEnumerable<Department> GetAll()
+        {
+            IEnumerable<Department> departmentList = new List<Department>();
+            if(dbContext != null && DatabaseContext.Departments.ToList().Count != 0)
+            {
+                departmentList = DatabaseContext.Departments.ToList();
+            } else
+            {
+                throw new NotImplementedException();
+            }
+            return departmentList;
         }
         public IEnumerable<Doctor> GetAllDoctorsOfDepartment(Department department)
         {

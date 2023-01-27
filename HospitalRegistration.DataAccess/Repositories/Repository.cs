@@ -11,9 +11,14 @@ namespace HospitalRegistration.DataAccess.Repositories
     public class Repository<T> : IRepository<T>, IDisposable where T : class
     {
         protected readonly DbContext dbContext;
+
         public Repository(DbContext dbContext)
         {
             this.dbContext = dbContext;
+        }
+        public IEnumerable<T> GetAll()
+        {
+            return dbContext.Set<T>().ToList();
         }
 
         public void Add(T entity)
@@ -22,7 +27,7 @@ namespace HospitalRegistration.DataAccess.Repositories
             //naudoti cia db context
         }
 
-        public void AddRange(List<T> entities)
+        public void AddRange(IEnumerable<T> entities)
         {
             //TODO
         }
@@ -32,7 +37,7 @@ namespace HospitalRegistration.DataAccess.Repositories
             //TODO
         }
 
-        public void RemoveRange(List<T> entities)
+        public void RemoveRange(IEnumerable<T> entities)
         {
             //TODO
         }

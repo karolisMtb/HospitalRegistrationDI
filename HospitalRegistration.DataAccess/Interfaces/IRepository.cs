@@ -8,10 +8,11 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IRepository<T> where T : class
     {
+        IEnumerable<T> GetAll();
         void Add(T entity);
-        void AddRange(List<T> entities);
+        void AddRange(IEnumerable<T> entities);
         void Remove(T entity);
-        void RemoveRange(List<T> entities);
+        void RemoveRange(IEnumerable<T> entities);
         // TODO
         // Add Move() moves object to another department/ doctor
     }

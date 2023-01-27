@@ -10,4 +10,8 @@
     <Folder Include="Services\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\HospitalRegistration.DataAccess\HospitalRegistration.DataAccess.csproj" />
+  </ItemGroup>
+
 </Project>

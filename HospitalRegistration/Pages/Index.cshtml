@@ -1,5 +1,8 @@
 ﻿@page
+@using HospitalRegistration.BusinessLogic.Services
+@using HospitalRegistration.Pages
 @model IndexModel
+
 @{
     ViewData["Title"] = "Home page";
 }
@@ -7,4 +10,17 @@
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h3>Hello there</h3>
+    <table>
+        <tr>
+            <th>Department Name</th>
+            <th>Department Id</th>
+        </tr>
+        @foreach(var item in Model.Departments) {
+            <tr>
+                <td>@item.Name</td>
+                <td>@item.Id</td>
+            </tr>
+        }
+    </table>
 </div>

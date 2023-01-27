@@ -21,5 +21,7 @@ namespace HospitalRegistration.DataAccess.DataContext
             var appSetting = root.GetSection("ConnectionStrings:DefaultConnection");
             SqlConnectionString = appSetting.Value;
         }
+
+        
     }
 }

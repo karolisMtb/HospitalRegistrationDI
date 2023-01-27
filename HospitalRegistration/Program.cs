@@ -1,11 +1,21 @@
+using HospitalRegistration.BusinessLogic.Services;
 using HospitalRegistration.DataAccess.DataContext;
+using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
+using HospitalRegistration.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
+builder.Services.AddDbContext<DatabaseContext>(
+    options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
+    );
+builder.Services.AddScoped<IAppConfiguration, AppConfiguration>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+
 
 
 var app = builder.Build();
