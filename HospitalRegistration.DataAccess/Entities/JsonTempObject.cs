@@ -6,12 +6,9 @@ using System.Threading.Tasks;
 
 namespace HospitalRegistration.DataAccess.Entities
 {
-    public class DoctorPatient
+    public class JsonTempObject<T> where T : class
     {
-        public Guid DoctorId { get; set; }
-        public Guid PatientId { get; set; }
-        public Patient Patient { get; set; }
-        public Doctor Doctor { get; set; }
+        public List<T> Objects { get; set; }
         public int Count { get; set; }
     }
 }

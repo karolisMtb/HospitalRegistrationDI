@@ -17,7 +17,7 @@ namespace HospitalRegistration.DataAccess.Repositories
         public IDoctorRepository Doctors { get; private set; }
         public UnitOfWork(DatabaseContext databaseContext)
         {
-            _databaseContext = databaseContext;
+            _databaseContext = databaseContext; // injected database context
             // Patient = new PatientRepository(_databaseContext);
         }
         public void SaveChanges()

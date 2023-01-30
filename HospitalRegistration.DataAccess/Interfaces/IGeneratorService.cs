@@ -7,9 +7,8 @@ using System.Threading.Tasks;
 
 namespace HospitalRegistration.DataAccess.Interfaces
 {
-    public interface IPatientRepository : IRepository<Patient>
+    public interface IGeneratorService<T> where T : class
     {
-        IEnumerable<Doctor> GetAllDoctorsOfPatient(Patient patient);
-        public void GeneratePatients();
+        List<T> Generate();
     }
 }

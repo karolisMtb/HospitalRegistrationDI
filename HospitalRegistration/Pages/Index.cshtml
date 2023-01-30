@@ -11,16 +11,17 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h3>Hello there</h3>
+    <a asp-page-handler="Test">Delete database</a>
     <table>
         <tr>
             <th>Department Name</th>
             <th>Department Id</th>
         </tr>
-        @foreach(var item in Model.Departments) {
+       @* @foreach(var item in Model.departments){
             <tr>
                 <td>@item.Name</td>
                 <td>@item.Id</td>
             </tr>
-        }
+        }*@
     </table>
 </div>

@@ -5,18 +5,26 @@ namespace HospitalRegistration.BusinessLogic.Services
 {
     public class DbService : IDbService
     {
-        public IDepartmentRepository _departmentRepository;
-        public IEnumerable<Department> Departments = new List<Department>();
+        private readonly IDepartmentRepository _departmentRepository;
 
         public DbService(IDepartmentRepository departmentRepository)
         {
             _departmentRepository = departmentRepository;
         }
-        public IEnumerable<Department> GetAllDepartments()
+
+        public void DeleteDepartments()
         {
-            Departments = _departmentRepository.GetAll();
-            return Departments;
+            if(GetAll().ToList().Count != 0)
+            {
+                _departmentRepository.RemoveAllDepartments();
+            }
         }
+
+        public IEnumerable<Department> GetAll()
+        {
+            return _departmentRepository.GetAll();
+        }
+        
 
     }
 

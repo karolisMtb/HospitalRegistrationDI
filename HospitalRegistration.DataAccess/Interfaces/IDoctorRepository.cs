@@ -10,5 +10,6 @@ namespace HospitalRegistration.DataAccess.Interfaces
     public interface IDoctorRepository : IRepository<Doctor>
     {
         IEnumerable<Patient> GetAllPatientsOfDoctor(Doctor doctor);
+        void GenerateDoctors();
     }
 }

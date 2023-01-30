@@ -1,6 +1,8 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
+using HospitalRegistration.DataAccess.Repositories;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +13,10 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DoctorRepository : Repository<Doctor>, IDoctorRepository
     {
-        public DoctorRepository(DatabaseContext databaseContext) : base(databaseContext)
+        public IGeneratorService<Doctor> DoctorGeneratorService { get; set; }
+        public DoctorRepository(IGeneratorService<Doctor> DoctorGeneratorService, DatabaseContext databaseContext) : base(databaseContext)
         {
-
+            this.DoctorGeneratorService = DoctorGeneratorService;
         }
 
         public DatabaseContext DatabaseContext
@@ -29,6 +32,14 @@ namespace HospitalRegistration.DataAccess.Repositories
             // galima naudoti databaseContext
             return null;
         }
+
+        public void GenerateDoctors()
+        {
+            DatabaseContext.Doctors.AddRange(DoctorGeneratorService.Generate());
+            // sita turi daryti UnitOfWork
+            //DatabaseContext.SaveChanges();
+        }
        
     }
 }
+

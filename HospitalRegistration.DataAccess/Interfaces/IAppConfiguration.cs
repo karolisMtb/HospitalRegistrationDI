@@ -8,6 +8,6 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IAppConfiguration
     {
-        string SqlConnectionString { get; }
+        string GetConnection();
     }
 }

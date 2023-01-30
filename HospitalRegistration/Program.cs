@@ -3,18 +3,27 @@ using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using HospitalRegistration.Pages;
+using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<DatabaseContext>(
-    options=>options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"))
-    );
-builder.Services.AddScoped<IAppConfiguration, AppConfiguration>();
+builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddScoped<IndexModel>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IGeneratorService<Department>, DepartmentGeneratorService>();
+builder.Services.AddScoped<IGeneratorService<Patient>, PatientGeneratorService>();
+builder.Services.AddScoped<IGeneratorService<Department>, DepartmentGeneratorService>();
+builder.Services.AddScoped<IDbService, DbService>();
+builder.Services.AddSingleton<JsonTempObject<Patient>>();
+
+//Prideti Onconfiguration
+//json file seed initial data false
+//{ "SeedInitialData": false, }
+
+
 
 
 

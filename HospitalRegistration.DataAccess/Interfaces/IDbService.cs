@@ -9,5 +9,7 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IDbService
     {
+        void DeleteDepartments();
+        IEnumerable<Department> GetAll();
     }
 }

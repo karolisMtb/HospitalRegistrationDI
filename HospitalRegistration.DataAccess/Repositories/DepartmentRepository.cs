@@ -1,15 +1,18 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
+using HospitalRegistration.DataAccess.Exceptions;
 
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DepartmentRepository : Repository<Department>, IDepartmentRepository
     {
-        public DepartmentRepository(DatabaseContext databaseContext) : base(databaseContext)
+        public IGeneratorService<Department> DepartmentGeneratorService;
+        public IEnumerable<Department> departmentList { get; set; }
+        public DepartmentRepository(IGeneratorService<Department> generatorService, DatabaseContext databaseContext) : base(databaseContext)
         {
-
+            DepartmentGeneratorService = generatorService;
         }
 
         public DatabaseContext DatabaseContext
@@ -20,30 +23,53 @@ namespace HospitalRegistration.DataAccess.Repositories
             }
         }
 
+        public void GenerateAllDepartments()
+        {
+            if(GetAll().Count() == 0)
+            {
+                DatabaseContext.Departments.AddRange(DepartmentGeneratorService.Generate());
+                // sita turi daryti UnitOfWork
+                //DatabaseContext.SaveChanges();
+            }
+            else
+            {
+                throw new FailedDbActionException("Failed to populate database");
+            }
+        }
+
+        public void RemoveAllDepartments()
+        {
+            foreach (var department in DatabaseContext.Departments)
+            {
+                DatabaseContext.Departments.Remove(department);
+            }
+            // sita turi daryti UnitOfWork
+            //DatabaseContext.SaveChanges();
+        }
+
         public IEnumerable<Department> GetAll()
         {
-            IEnumerable<Department> departmentList = new List<Department>();
+            departmentList = new List<Department>();
             if(dbContext != null && DatabaseContext.Departments.ToList().Count != 0)
             {
                 departmentList = DatabaseContext.Departments.ToList();
-            } else
-            {
-                throw new NotImplementedException();
             }
+
             return departmentList;
         }
         public IEnumerable<Doctor> GetAllDoctorsOfDepartment(Department department)
         {
-            //TODO
-            return null;
+            departmentList = GetAll();
+
+            return departmentList.Where(x =>x.Id == department.Id).SelectMany(x => x.Doctors).ToList();
         }
 
         public IEnumerable<Patient> GetAllPatientsOfDepartment(Department department)
         {
-            //TODO
-            // is databasecontext traukti pacientus
+            var doctorsListOfDepartment = GetAllDoctorsOfDepartment(department);
+            List<Patient> patientsOfDepartment = new List<Patient>();
             return null;
-        }
+        }       
        
     }
 }

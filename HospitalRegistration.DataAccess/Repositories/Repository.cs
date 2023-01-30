@@ -39,7 +39,7 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         public void RemoveRange(IEnumerable<T> entities)
         {
-            //TODO
+            dbContext.Set<T>().RemoveRange(entities);
         }
         public void Dispose()
         {
