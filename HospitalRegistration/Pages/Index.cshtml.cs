@@ -10,28 +10,43 @@ namespace HospitalRegistration.Pages
 {
     public class IndexModel : PageModel
     {
-        public IEnumerable<Department> departments;
         public IDbService _dbService;
 
-        //injectinti serviso klase is business logic layer'io. 
-        //Ta klase naudoja repozitorijos klase repository layer'yje
+        public IGeneratorService DbMockDataGeneratorService;
+        public IUnitOfWork unitOfWork;
 
-        public IndexModel(IDbService dbService)
+        public IndexModel(IDbService dbService, IGeneratorService dbMockDataGeneratorService, IUnitOfWork unitOfWork)
         {
             _dbService = dbService;
-            
+            DbMockDataGeneratorService = dbMockDataGeneratorService;
+            this.unitOfWork = unitOfWork;           
         }
 
         public void OnGetTest()
         {
-            _dbService.DeleteDepartments();
+            var patients = DbMockDataGeneratorService.GeneratePatients();
+            var docs = DbMockDataGeneratorService.GenerateDoctors();
+            var departments = DbMockDataGeneratorService.GenerateDepartments();
+            var illnesses = DbMockDataGeneratorService.GenerateIllnesses();
+            var specialties = DbMockDataGeneratorService.GenerateSpecialties();
+
+            if(
+                patients.Count != 0 &&
+                docs.Count != 0 &&
+                departments.Count != 0)
+            {
+                
+                unitOfWork.PatientRepository.AddRange(patients);
+                unitOfWork.DoctorRepository.AddRange(docs);
+                unitOfWork.DepartmentRepository.AddRange(departments);
+                unitOfWork.SaveChanges();
+            }
         }
         
 
         public void OnGet()
         {
-            departments = new List<Department>();
-            departments = _dbService.GetAll();
+            var departments = _dbService.GetAll().ToList();
         }
     }
 }

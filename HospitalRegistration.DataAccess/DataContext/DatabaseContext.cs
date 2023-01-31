@@ -25,6 +25,14 @@ namespace HospitalRegistration.DataAccess.DataContext
 
             modelBuilder.Entity<Patient>().HasMany(x => x.DoctorPatients).WithOne(x => x.Patient).HasForeignKey(x => x.PatientId);
             modelBuilder.Entity<Doctor>().HasMany(x => x.DoctorPatients).WithOne(x => x.Doctor).HasForeignKey(x => x.DoctorId);
+
+            modelBuilder.Entity<PatientIllness>().HasKey(x => new
+            {
+                x.PatientId,
+                x.IlnessId
+            });
+            modelBuilder.Entity<Patient>().HasMany(x => x.PatientIllnesses).WithOne(x => x.Patient).HasForeignKey(x => x.PatientId);
+            modelBuilder.Entity<Illness>().HasMany(x => x.PatientIllnesses).WithOne(x => x.Illness).HasForeignKey(x => x.IlnessId);
         }
 
         public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
@@ -39,5 +47,6 @@ namespace HospitalRegistration.DataAccess.DataContext
         public DbSet<Illness> Illnesses { get; set; }
         public DbSet<Patient> Patients { get; set; }
         public DbSet<Specialty> DoctorSpecialties { get; set; }
+        public DbSet<PatientIllness> PatientIllnesses { get; set; }
     }
 }

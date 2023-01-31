@@ -1,77 +1,162 @@
-﻿{
-  "paddy": {
-    "name": "Paddy",
-    "last_name": "O’Furniture",
-    "dateOfBirth": "3/14/1955"
-  },
-  "constance": {
-    "name": "Constance",
-    "last_name": "Noring",
-    "dateOfBirth": "5/4/1979"
-  },
-  "lois": {
-    "name": "Lois",
-    "last_name": "Di Nominator",
-    "dateOfBirth": "5/27/1981"
-  },
-  "minnie": {
-    "name": "Minnie",
-    "last_name": "Van Ryder",
-    "dateOfBirth": "6/2/1982"
-  },
-  "lynn": {
-    "name": "Lynn",
-    "last_name": "O’Leeum",
-    "dateOfBirth": "6/8/1982"
-  },
-  "ann": {
-    "name": "P. Ann",
-    "last_name": "O’Recital",
-    "dateOfBirth": "9/5/1984"
-  },
-  "lee": {
-    "name": "Lee A.",
-    "last_name": "Sun",
-    "dateOfBirth": "7/12/1995"
-  },
-  "ray": {
-    "name": "Ray",
-    "last_name": "Sin",
-    "dateOfBirth": "8/26/1997"
-  },
-  "isabel": {
-    "name": "Isabelle",
-    "last_name": "Ringing",
-    "dateOfBirth": "5/7/1999"
-  },
-  "eileen": {
-    "name": "Eileen",
-    "last_name": "Sidewayse",
-    "dateOfBirth": "3/4/2002"
-  },
-  "rita": {
-    "name": "Rita",
-    "last_name": "Book",
-    "dateOfBirth": "8/22/2002"
-  },
-  "paige": {
-    "name": "Paige",
-    "last_name": "Turner",
-    "dateOfBirth": "6/18/2004"
-  },
-  "rhoda": {
-    "name": "Rhoda",
-    "last_name": "Report",
-    "dateOfBirth": "1/17/2005"
-  },
-  "augusta": {
-    "name": "Augusta",
-    "last_name": "Wind",
-    "dateOfBirth": "2/6/2007"
-  },
-  "chris": {
-    "name": "Chris",
-    "last_name": "Anthemum",
-    "dateOfBirth": "7/8/2008"
-  }
-}
+﻿[{
+		"Name": "Paddy",
+		"LastName": "O’Furniture",
+		"DateOfBirth": "2022-05-12T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Constance",
+		"LastName": "Noring",
+		"DateOfBirth": "2022-05-12T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Lois",
+		"LastName": "Di Nominator",
+		"DateOfBirth": "1981-05-27T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Minnie",
+		"LastName": "Van Ryder",
+		"DateOfBirth": "1982-02-06T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Lynn",
+		"LastName": "O’Leeum",
+		"DateOfBirth": "1982-08-06T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "P. Ann",
+		"LastName": "O’Recital",
+		"DateOfBirth": "1984-05-09T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Lee A.",
+		"LastName": "Sun",
+		"DateOfBirth": "1995-12-07T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Ray",
+		"LastName": "Sin",
+		"DateOfBirth": "1997-08-26T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Isabelle",
+		"LastName": "Ringing",
+		"DateOfBirth": "1999-07-05T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Eileen",
+		"LastName": "Sidewayse",
+		"DateOfBirth": "2002-04-03T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Rita",
+		"LastName": "Book",
+		"DateOfBirth": "2002-08-22T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Paige",
+		"LastName": "Turner",
+		"DateOfBirth": "2004-06-18T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Rhoda",
+		"LastName": "Report",
+		"DateOfBirth": "2001-01-17T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Augusta",
+		"LastName": "Wind",
+		"DateOfBirth": "1997-02-06T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Chris",
+		"LastName": "Anthemum",
+		"DateOfBirth": "2008-07-08T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Reeve",
+		"LastName": "Ewer",
+		"DateOfBirth": "1961-12-20T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Tex",
+		"LastName": "Ryta",
+		"DateOfBirth": "1966-01-25T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Theresa",
+		"LastName": "Green",
+		"DateOfBirth": "1967-11-15T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Barry",
+		"LastName": "Kade",
+		"DateOfBirth": "1968-03-21T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Stan",
+		"LastName": "Dupp",
+		"DateOfBirth": "1969-06-23T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Neil",
+		"LastName": "Down",
+		"DateOfBirth": "1971-02-03T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Con",
+		"LastName": "Trariweis",
+		"DateOfBirth": "1971-09-07T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	},
+	{
+		"Name": "Don",
+		"LastName": "Messwidme",
+		"DateOfBirth": "1975-09-26T00:00:00",
+		"DoctorPatients": [],
+		"PatientIllnesses": []
+	}
+]

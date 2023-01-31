@@ -1,10 +1,5 @@
 ﻿using HospitalRegistration.DataAccess.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
@@ -23,13 +18,12 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         public void Add(T entity)
         {
-            //TODO
-            //naudoti cia db context
+            dbContext.Set<T>().Add(entity);
         }
 
         public void AddRange(IEnumerable<T> entities)
         {
-            //TODO
+            dbContext.Set<T>().AddRange(entities);
         }
 
         public void Remove(T entity)

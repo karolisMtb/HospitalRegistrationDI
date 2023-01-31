@@ -1,0 +1,36 @@
+﻿[
+	{
+		"Name": "Allergy"
+	},
+	{
+		"Name": "Flu"
+	},
+	{
+		"Name": "Headache"
+	},
+	{
+		"Name": "Chickenpox"
+	},
+	{
+		"Name": "Pneumonia"
+	},
+	{
+		"Name": "Muscle aches"
+	},
+	{
+		"Name": "Kidney failure"
+	},
+	{
+		"Name": "Heart illness"
+	},
+	{
+		"Name": "Bone fracture"
+	},
+	{
+		"Name" : "Tendon injuries"
+	},
+	{
+		"Name": "Depression"
+	}
+		
+]

@@ -7,8 +7,12 @@ using System.Threading.Tasks;
 
 namespace HospitalRegistration.DataAccess.Interfaces
 {
-    public interface IGeneratorService<T> where T : class
+    public interface IGeneratorService
     {
-        List<T> Generate();
+        List<Patient> GeneratePatients();
+        List<Doctor> GenerateDoctors();
+        List<Department> GenerateDepartments();
+        List<Illness> GenerateIllnesses();
+        List<Specialty> GenerateSpecialties();
     }
 }

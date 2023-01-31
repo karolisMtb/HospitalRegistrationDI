@@ -4,6 +4,7 @@ using HospitalRegistration.DataAccess.DataContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HospitalRegistration.DataAccess.Migrations
 {
     [DbContext(typeof(DatabaseContext))]
-    partial class DatabaseContextModelSnapshot : ModelSnapshot
+    [Migration("20230131112457_AddedPrimaryKey")]
+    partial class AddedPrimaryKey
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +23,21 @@ namespace HospitalRegistration.DataAccess.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("DoctorSpecialty", b =>
+                {
+                    b.Property<Guid>("DoctorsId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SpecialtiesId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.HasKey("DoctorsId", "SpecialtiesId");
+
+                    b.HasIndex("SpecialtiesId");
+
+                    b.ToTable("DoctorSpecialty");
+                });
 
             modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Department", b =>
                 {
@@ -146,18 +163,28 @@ namespace HospitalRegistration.DataAccess.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid?>("DoctorId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("DoctorId");
-
                     b.ToTable("DoctorSpecialties");
+                });
+
+            modelBuilder.Entity("DoctorSpecialty", b =>
+                {
+                    b.HasOne("HospitalRegistration.DataAccess.Entities.Doctor", null)
+                        .WithMany()
+                        .HasForeignKey("DoctorsId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("HospitalRegistration.DataAccess.Entities.Specialty", null)
+                        .WithMany()
+                        .HasForeignKey("SpecialtiesId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Doctor", b =>
@@ -207,13 +234,6 @@ namespace HospitalRegistration.DataAccess.Migrations
                     b.Navigation("Patient");
                 });
 
-            modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Specialty", b =>
-                {
-                    b.HasOne("HospitalRegistration.DataAccess.Entities.Doctor", null)
-                        .WithMany("Specialties")
-                        .HasForeignKey("DoctorId");
-                });
-
             modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Department", b =>
                 {
                     b.Navigation("Doctors");
@@ -222,8 +242,6 @@ namespace HospitalRegistration.DataAccess.Migrations
             modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Doctor", b =>
                 {
                     b.Navigation("DoctorPatients");
-
-                    b.Navigation("Specialties");
                 });
 
             modelBuilder.Entity("HospitalRegistration.DataAccess.Entities.Illness", b =>

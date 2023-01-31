@@ -1,22 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace HospitalRegistration.DataAccess.Entities
 {
     public class Illness
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<Patient> Patients { get; set; }
+        [JsonIgnore]
+        public ICollection<PatientIllness> PatientIllnesses { get; set; }
 
         public Illness(string name)
         {
             Id = Guid.NewGuid();
             Name = name;
-            Patients = new List<Patient>();
+            PatientIllnesses = new List<PatientIllness>();
         }
     }
 }

@@ -1,33 +1,30 @@
 using HospitalRegistration.BusinessLogic.Services;
 using HospitalRegistration.DataAccess.DataContext;
-using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
 using HospitalRegistration.Pages;
-using Microsoft.AspNetCore.Identity;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DatabaseContext>();
+builder.Services.AddScoped<IGeneratorService, DbMockDataGeneratorService>();
 builder.Services.AddScoped<IndexModel>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
-builder.Services.AddScoped<IGeneratorService<Department>, DepartmentGeneratorService>();
-builder.Services.AddScoped<IGeneratorService<Patient>, PatientGeneratorService>();
-builder.Services.AddScoped<IGeneratorService<Department>, DepartmentGeneratorService>();
+builder.Services.AddScoped<IPatientRepository, PatientRepository>();
+builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
+builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
 builder.Services.AddScoped<IDbService, DbService>();
-builder.Services.AddSingleton<JsonTempObject<Patient>>();
+builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
 //Prideti Onconfiguration
-//json file seed initial data false
+//json file seedInitialData: false. kai bus seedinta, tai reikia nustatyti, kad butu true
 //{ "SeedInitialData": false, }
 
 
-
-
-
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

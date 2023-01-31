@@ -1,18 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.Json.Serialization;
 
 namespace HospitalRegistration.DataAccess.Entities
 {
     public class Doctor
     {
+        [JsonIgnore]
         public Guid Id { get; set; }
+        [JsonIgnore]
         public Guid DepartmentId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
+        [JsonIgnore]
         public ICollection<Specialty> Specialties { get; set; }
+        [JsonIgnore]
         public ICollection<DoctorPatient> DoctorPatients { get; set; }
 
         public Doctor(string name, string lastName)

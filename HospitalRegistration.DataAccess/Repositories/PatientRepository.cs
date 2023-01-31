@@ -6,10 +6,9 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class PatientRepository : Repository<Patient>, IPatientRepository
     {
-        public IGeneratorService<Patient> PatientGeneratorService { get; set; }
-        public PatientRepository(IGeneratorService<Patient> PatientGeneratorService, DatabaseContext databaseContext) : base(databaseContext)
+        public PatientRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
-            this.PatientGeneratorService = PatientGeneratorService;
+
         }
 
         public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
@@ -20,11 +19,11 @@ namespace HospitalRegistration.DataAccess.Repositories
             return null;
         }
 
-        public void GeneratePatients()
-        {
-            DatabaseContext.Patients.AddRange(PatientGeneratorService.Generate());
-            // sita turi daryti UnitOfWork
-            //DatabaseContext.SaveChanges();
-        }
+        //public void GeneratePatients()
+        //{
+        //    DatabaseContext.Patients.AddRange(PatientGeneratorService.Generate());
+        //    // sita turi daryti UnitOfWork
+        //    //DatabaseContext.SaveChanges();
+        //}
     }
 }

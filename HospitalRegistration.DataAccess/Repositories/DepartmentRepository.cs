@@ -8,11 +8,9 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DepartmentRepository : Repository<Department>, IDepartmentRepository
     {
-        public IGeneratorService<Department> DepartmentGeneratorService;
         public IEnumerable<Department> departmentList { get; set; }
-        public DepartmentRepository(IGeneratorService<Department> generatorService, DatabaseContext databaseContext) : base(databaseContext)
+        public DepartmentRepository( DatabaseContext databaseContext) : base(databaseContext)
         {
-            DepartmentGeneratorService = generatorService;
         }
 
         public DatabaseContext DatabaseContext
@@ -20,20 +18,6 @@ namespace HospitalRegistration.DataAccess.Repositories
             get
             {
                 return dbContext as DatabaseContext;
-            }
-        }
-
-        public void GenerateAllDepartments()
-        {
-            if(GetAll().Count() == 0)
-            {
-                DatabaseContext.Departments.AddRange(DepartmentGeneratorService.Generate());
-                // sita turi daryti UnitOfWork
-                //DatabaseContext.SaveChanges();
-            }
-            else
-            {
-                throw new FailedDbActionException("Failed to populate database");
             }
         }
 
