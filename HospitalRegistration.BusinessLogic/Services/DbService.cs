@@ -23,10 +23,6 @@ namespace HospitalRegistration.BusinessLogic.Services
         public IEnumerable<Department> GetAll()
         {
             return _departmentRepository.GetAll();
-        }
-        
-
+        }  
     }
-
-
 }
