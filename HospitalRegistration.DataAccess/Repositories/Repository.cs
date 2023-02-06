@@ -37,7 +37,7 @@ namespace HospitalRegistration.DataAccess.Repositories
         }
         public void Dispose()
         {
-            // TODO
+            dbContext.Dispose();
         }
     }
 }

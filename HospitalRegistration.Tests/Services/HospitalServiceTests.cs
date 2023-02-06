@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Moq;
 using HospitalRegistration.BusinessLogic.Services;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using FluentAssertions;
-using Microsoft.EntityFrameworkCore;
 
 namespace HospitalRegistration.Tests.Services
 {

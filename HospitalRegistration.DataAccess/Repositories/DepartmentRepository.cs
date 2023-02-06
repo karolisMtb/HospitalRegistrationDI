@@ -3,7 +3,6 @@ using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
@@ -21,14 +20,21 @@ namespace HospitalRegistration.DataAccess.Repositories
         {
             foreach (var department in DatabaseContext.Departments)
             {
-                //paguglink skirtuma tarp remove and delete
                 DatabaseContext.Departments.Remove(department);
             }
         }
 
         public Department GetDepartment(Department department)
         {
-            return DatabaseContext.Departments.FirstOrDefault(department);
+            var matchingDepartment = DatabaseContext.Departments.Where(x=> x.Id== department.Id).FirstOrDefault();
+            if (matchingDepartment == null)
+            {
+                throw new FailedDbActionException("Department was not found");
+            }
+            else
+            {
+                return matchingDepartment;
+            }
         }
 
         public IEnumerable<Department> GetAllDepartments()

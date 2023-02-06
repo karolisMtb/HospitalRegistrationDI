@@ -1,13 +1,7 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
-using HospitalRegistration.DataAccess.Repositories;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
@@ -19,13 +13,8 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         }
 
-        public DatabaseContext DatabaseContext
-        {
-            get
-            {
-                return dbContext as DatabaseContext;
-            }
-        }
+        public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
+        
         public Doctor GetDoctor(Doctor doctor)
         {
             return DatabaseContext.Doctors.FirstOrDefault(doctor);

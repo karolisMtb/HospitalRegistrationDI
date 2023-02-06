@@ -1,5 +1,4 @@
-﻿using HospitalRegistration.DataAccess.DataContext;
-using HospitalRegistration.DataAccess.Entities;
+﻿using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using Newtonsoft.Json;
 
@@ -17,7 +16,8 @@ namespace HospitalRegistration.BusinessLogic.Services
         {
             PatientList = new List<Patient>();
 
-            //iskelti i configus
+            //TODO
+            //move to appsettings.json
             string path = @"C:\Users\Karolis\source\repos\HospitalRegistrationApp\HospitalRegistration.DataAccess\Files\Patients.json";
 
             if (File.Exists(path))
@@ -28,7 +28,7 @@ namespace HospitalRegistration.BusinessLogic.Services
             {
                 throw new FileNotFoundException();
             }
-            //TODO perkelti path i appsettings.json
+
             return PatientList;
         }
 
@@ -36,7 +36,8 @@ namespace HospitalRegistration.BusinessLogic.Services
         {
             DoctorList = new List<Doctor>();
 
-            //TODO perkelti path i appsettings.json
+            //TODO
+            //move to appsettings.json
             string path = @"C:\Users\Karolis\source\repos\HospitalRegistrationApp\HospitalRegistration.DataAccess\Files\Doctors.json";
 
             if (File.Exists(path))
@@ -69,7 +70,11 @@ namespace HospitalRegistration.BusinessLogic.Services
         public List<Illness> GenerateIllnesses()
         {
             IllnessList = new List<Illness>();
+
+            //TODO
+            //move to appsettings.json
             string path = @"C:\Users\Karolis\source\repos\HospitalRegistrationApp\HospitalRegistration.DataAccess\Files\Illnesses.json";
+
             if (File.Exists(path))
             {
                 IllnessList = JsonConvert.DeserializeObject<List<Illness>>(File.ReadAllText(path));
@@ -85,7 +90,11 @@ namespace HospitalRegistration.BusinessLogic.Services
         public List<Specialty> GenerateSpecialties()
         {
             SpecialtiesList = new();
+
+            //TODO
+            //move to appsettings.json
             string path = @"C:\Users\Karolis\source\repos\HospitalRegistrationApp\HospitalRegistration.DataAccess\Files\Specialties.json";
+
             if (File.Exists(path))
             {
                 SpecialtiesList = JsonConvert.DeserializeObject<List<Specialty>>(File.ReadAllText(path));

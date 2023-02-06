@@ -6,20 +6,12 @@ using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
 using HospitalRegistration.Pages;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<DatabaseContext>(options =>
-options
-                .UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True"));
-
-        //...........
-        //Other Configurations
-        //...........
-    ;
+builder.Services.AddDbContext<DatabaseContext>(options => { options.UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True"); }, ServiceLifetime.Transient);
 builder.Services.AddScoped<IGeneratorService, DbMockDataGeneratorService>();
 builder.Services.AddScoped<IndexModel>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();

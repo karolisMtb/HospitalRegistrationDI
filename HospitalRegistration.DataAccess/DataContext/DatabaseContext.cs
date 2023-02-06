@@ -1,11 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HospitalRegistration.DataAccess.Entities;
+﻿using HospitalRegistration.DataAccess.Entities;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace HospitalRegistration.DataAccess.DataContext
 {
@@ -23,17 +17,6 @@ namespace HospitalRegistration.DataAccess.DataContext
         {
 
         }
-
-        public DatabaseContext()
-        {
-
-        }
-
-        public AppConfiguration AppConfiguration;
-
-        protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True");
-
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -69,7 +52,5 @@ namespace HospitalRegistration.DataAccess.DataContext
                 .WithOne(x => x.Illness)
                 .HasForeignKey(x => x.IlnessId);
         }
-
-
     }
 }

@@ -1,8 +1,6 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace HospitalRegistration.BusinessLogic.Services
 {
@@ -42,13 +40,6 @@ namespace HospitalRegistration.BusinessLogic.Services
 
             if (doctor != null && department != null && !doctorAlreadyExistsInDepartment)
             {
-                //TODO istrinti kai viskas veiks
-
-                //var query = from doc in _databaseContext.Doctors
-                //            where doc.Id == doctor.Id
-                //            select doc;
-
-                //doctor.DepartmentId = department.Id;
                 departmentToBeAsignedTo.Doctors.Add(doctorToBeAsigned);
                 _unitOfWork.SaveChanges();
             }
@@ -84,14 +75,9 @@ namespace HospitalRegistration.BusinessLogic.Services
             }
             else
             {
-                //either
                 doctorPatient.Patient = patientToBeAsigned;
                 doctorPatient.Doctor = doctorToBeAsignedTo;
                 doctorPatient.Count = 1;
-                //or
-                //doctorPatient.DoctorId = doctorToBeAsignedTo.Id;
-                //doctorPatient.PatientId = patientToBeAsigned.Id;
-                //doctorPatient.Count = 1;
 
                 _unitOfWork.PatientRepository.AddDoctorPatient(doctorPatient);
                 _unitOfWork.SaveChanges();
@@ -122,7 +108,6 @@ namespace HospitalRegistration.BusinessLogic.Services
             _unitOfWork.SaveChanges();
         }
 
-
         public void DischargePatient(Patient patient)
         {
             var patientToBeDischarged = _unitOfWork.PatientRepository.GetPatient(patient);
@@ -132,8 +117,9 @@ namespace HospitalRegistration.BusinessLogic.Services
                 _unitOfWork.PatientRepository.Remove(patientToBeDischarged);
                 _unitOfWork.SaveChanges();
             }
-
         }
+
+        //TODO
         public void AsignPatientToNewDoctor()
         {
 
