@@ -1,33 +1,43 @@
 ﻿[
   {
-    "Name": "Toxicology"
+    "Name": "Toxicology",
+    "Doctors": []
   },
   {
-    "Name": "Chirugy"
+    "Name": "Chirugy",
+    "Doctors": []
   },
   {
-    "Name": "Allergy and immunology"
+    "Name": "Allergy and immunology",
+    "Doctors": []
   },
   {
-    "Name": "Emergency medicine"
+    "Name": "Emergency medicine",
+    "Doctors": []
   },
   {
-    "Name": "Neurology"
+    "Name": "Neurology",
+    "Doctors": []
   },
   {
-    "Name": "Surgery"
+    "Name": "Surgery",
+    "Doctors": []
   },
   {
-    "Name": "Internal medicine"
+    "Name": "Internal medicine",
+    "Doctors": []
   },
   {
-    "Name": "Physical medicine"
+    "Name": "Physical medicine",
+    "Doctors": []
   },
   {
-    "Name": "Family medicine"
+    "Name": "Family medicine",
+    "Doctors": []
   },
   {
-    "Name": "Psychiatry"
+    "Name": "Psychiatry",
+    "Doctors": []
   }
 
 ]

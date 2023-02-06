@@ -1,22 +1,22 @@
 ﻿using Microsoft.Extensions.Configuration;
 using HospitalRegistration.DataAccess.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalRegistration.DataAccess.DataContext
 {
     public class AppConfiguration : IAppConfiguration
     {
         protected readonly IConfiguration _configuration;
-        public string SqlConnectionString { get; set; }
 
         public AppConfiguration(IConfiguration configuration)
         {
             _configuration = configuration;
         }
 
-        public string GetConnection() // pridejau
+        public void GetConnection(IServiceCollection services)
         {
-            SqlConnectionString = _configuration.GetConnectionString("DefaultConnection");
-            return SqlConnectionString;
+            services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(_configuration.GetConnectionString("SQLServer")));
         }
     }
 }

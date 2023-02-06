@@ -17,6 +17,7 @@ namespace HospitalRegistration.BusinessLogic.Services
         {
             PatientList = new List<Patient>();
 
+            //iskelti i configus
             string path = @"C:\Users\Karolis\source\repos\HospitalRegistrationApp\HospitalRegistration.DataAccess\Files\Patients.json";
 
             if (File.Exists(path))

@@ -1,7 +1,7 @@
-﻿using HospitalRegistration.DataAccess.DataContext;
+﻿using HospitalRegistration.BusinessLogic.Services;
+using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
-using HospitalRegistration.DataAccess.Interfaces;
-using HospitalRegistration.DataAccess.Repositories;
+using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,27 +12,32 @@ namespace HospitalRegistration.BusinessLogic
 {
     public class DbInitializerService
     {
-        private IUnitOfWork unitOfWork;
-        public DbInitializerService(IUnitOfWork unitOfWork)
+        public static void Initialize(DatabaseContext dbContext)
         {
-            this.unitOfWork = unitOfWork;
-        }
-        public void Initialize(DatabaseContext dbContext)
-        {
+            DbMockDataGeneratorService dbMockDataGeneratorService = new DbMockDataGeneratorService();
+
             ArgumentNullException.ThrowIfNull(dbContext, nameof(dbContext));
             dbContext.Database.EnsureCreated();
-            if (dbContext.Illnesses.Any()) return;
+            if (dbContext.Illnesses.Any() &&
+                dbContext.DoctorSpecialties.Any() &&
+                dbContext.Doctors.Any() &&
+                dbContext.Patients.Any() &&
+                dbContext.Departments.Any()) return;
 
-            var illnesses = new Illness[]
-            {
-                new Illness("vejaraupiai")
-            };
+            var illnesses = dbMockDataGeneratorService.GenerateIllnesses();
+            var specialties = dbMockDataGeneratorService.GenerateSpecialties();
+            var doctors = dbMockDataGeneratorService.GenerateDoctors();
+            var patients = dbMockDataGeneratorService.GeneratePatients();
+            var departments = dbMockDataGeneratorService.GenerateDepartments();
 
-            foreach (var illness in illnesses)
-            {
-                dbContext.Illnesses.Add(illness);
-            }
-            unitOfWork.SaveChanges();      
+
+            dbContext.Illnesses.AddRange(illnesses);
+            dbContext.DoctorSpecialties.AddRange(specialties);
+            dbContext.Doctors.AddRange(doctors);
+            dbContext.Patients.AddRange(patients);
+            dbContext.Departments.AddRange(departments);
+
+            dbContext.SaveChanges();
         }
     }
 }

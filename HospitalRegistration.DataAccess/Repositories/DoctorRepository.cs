@@ -13,6 +13,7 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DoctorRepository : Repository<Doctor>, IDoctorRepository
     {
+        public IEnumerable<Doctor> DoctorsOfPatient { get; set; }
         public DoctorRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
 
@@ -25,20 +26,18 @@ namespace HospitalRegistration.DataAccess.Repositories
                 return dbContext as DatabaseContext;
             }
         }
-        public IEnumerable<Patient> GetAllPatientsOfDoctor(Doctor doctor)
+        public Doctor GetDoctor(Doctor doctor)
         {
-            //TODO
-            // galima naudoti databaseContext
-            return null;
+            return DatabaseContext.Doctors.FirstOrDefault(doctor);
         }
 
-        //public void GenerateDoctors()
-        //{
-        //    DatabaseContext.Doctors.AddRange(DoctorGeneratorService.Generate());
-        //    // sita turi daryti UnitOfWork
-        //    //DatabaseContext.SaveChanges();
-        //}
-       
+        public IEnumerable<Doctor> GetAllDoctorsOfPatient(Patient patient)
+        {
+            DoctorsOfPatient = new List<Doctor>();
+            DoctorsOfPatient = (IEnumerable<Doctor>)DatabaseContext.DoctorPatients.Include(x => x.Doctor).Where(x => x.PatientId == patient.Id).Select(x => x.Patient);
+            return DoctorsOfPatient;
+        }
+            
     }
 }
 

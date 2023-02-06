@@ -11,6 +11,8 @@ namespace HospitalRegistration.DataAccess.Interfaces
     {
         IEnumerable<Doctor> GetAllDoctorsOfDepartment(Department department);
         IEnumerable<Patient> GetAllPatientsOfDepartment(Department department);
+        Department GetDepartment(Department department);
+        void RemoveDoctorFromDepartment(Doctor doctor, Department department);
         void RemoveAllDepartments();
     }
 }

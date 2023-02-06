@@ -11,9 +11,29 @@ namespace HospitalRegistration.DataAccess.DataContext
 {
     public class DatabaseContext : DbContext 
     {
-        public AppConfiguration AppConfiguration { get; set; }
+        public DbSet<Department> Departments { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<DoctorPatient> DoctorPatients { get; set; }
+        public DbSet<Illness> Illnesses { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Specialty> DoctorSpecialties { get; set; }
+        public DbSet<PatientIllness> PatientIllnesses { get; set; }
+
+        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
+        {
+
+        }
+
+        public DatabaseContext()
+        {
+
+        }
+
+        public AppConfiguration AppConfiguration;
+
         protected override void OnConfiguring(DbContextOptionsBuilder options)
-            => options.UseSqlServer($@"Data Source = LAZYBASTARD\; Initial Catalog = HospitalDB; Integrated Security = True"); // object not set to instance o.a.o
+            => options.UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True");
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -23,30 +43,33 @@ namespace HospitalRegistration.DataAccess.DataContext
                 x.DoctorId
             });
 
-            modelBuilder.Entity<Patient>().HasMany(x => x.DoctorPatients).WithOne(x => x.Patient).HasForeignKey(x => x.PatientId);
-            modelBuilder.Entity<Doctor>().HasMany(x => x.DoctorPatients).WithOne(x => x.Doctor).HasForeignKey(x => x.DoctorId);
+            modelBuilder.Entity<Patient>()
+                .HasMany(x => x.DoctorPatients)
+                .WithOne(x => x.Patient)
+                .HasForeignKey(x => x.PatientId);
+
+            modelBuilder.Entity<Doctor>()
+                .HasMany(x => x.DoctorPatients)
+                .WithOne(x => x.Doctor)
+                .HasForeignKey(x => x.DoctorId);
 
             modelBuilder.Entity<PatientIllness>().HasKey(x => new
             {
                 x.PatientId,
                 x.IlnessId
             });
-            modelBuilder.Entity<Patient>().HasMany(x => x.PatientIllnesses).WithOne(x => x.Patient).HasForeignKey(x => x.PatientId);
-            modelBuilder.Entity<Illness>().HasMany(x => x.PatientIllnesses).WithOne(x => x.Illness).HasForeignKey(x => x.IlnessId);
+
+            modelBuilder.Entity<Patient>()
+                .HasMany(x => x.PatientIllnesses)
+                .WithOne(x => x.Patient)
+                .HasForeignKey(x => x.PatientId);
+
+            modelBuilder.Entity<Illness>()
+                .HasMany(x => x.PatientIllnesses)
+                .WithOne(x => x.Illness)
+                .HasForeignKey(x => x.IlnessId);
         }
 
-        public DatabaseContext(DbContextOptions<DatabaseContext> options) : base(options)
-        {
 
-        }
-
-        //DBsets go here
-        public DbSet<Department> Departments { get; set; }
-        public DbSet<Doctor> Doctors { get; set; }
-        public DbSet<DoctorPatient> DoctorPatients { get; set; }
-        public DbSet<Illness> Illnesses { get; set; }
-        public DbSet<Patient> Patients { get; set; }
-        public DbSet<Specialty> DoctorSpecialties { get; set; }
-        public DbSet<PatientIllness> PatientIllnesses { get; set; }
     }
 }

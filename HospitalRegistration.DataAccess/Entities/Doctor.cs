@@ -7,12 +7,12 @@ namespace HospitalRegistration.DataAccess.Entities
         [JsonIgnore]
         public Guid Id { get; set; }
         [JsonIgnore]
-        public Guid DepartmentId { get; set; }
+        public Guid? DepartmentId { get; set; }
         public string Name { get; set; }
         public string LastName { get; set; }
-        [JsonIgnore]
+
         public ICollection<Specialty> Specialties { get; set; }
-        [JsonIgnore]
+
         public ICollection<DoctorPatient> DoctorPatients { get; set; }
 
         public Doctor(string name, string lastName)

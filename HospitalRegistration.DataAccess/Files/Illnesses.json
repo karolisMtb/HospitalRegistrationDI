@@ -1,36 +1,47 @@
 ﻿[
 	{
-		"Name": "Allergy"
+		"Name": "Allergy",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Flu"
+		"Name": "Flu",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Headache"
+		"Name": "Headache",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Chickenpox"
+		"Name": "Chickenpox",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Pneumonia"
+		"Name": "Pneumonia",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Muscle aches"
+		"Name": "Muscle aches",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Kidney failure"
+		"Name": "Kidney failure",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Heart illness"
+		"Name": "Heart illness",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Bone fracture"
+		"Name": "Bone fracture",
+		"PatientIllness": []
 	},
 	{
-		"Name" : "Tendon injuries"
+		"Name": "Tendon injuries",
+		"PatientIllness": []
 	},
 	{
-		"Name": "Depression"
+		"Name": "Depression",
+		"PatientIllness": []
 	}
 		
 ]

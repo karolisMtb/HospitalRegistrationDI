@@ -10,7 +10,7 @@ namespace HospitalRegistration.DataAccess.Entities
         public string LastName { get; set; }
         public DateTime DateOfBirth { get; set; }
         [JsonIgnore]
-        public DateTime SignedIn { get; set; }
+        public DateTime? SignedIn { get; set; }
         [JsonIgnore]
         public DateTime? SignedOut { get; set; }
         public ICollection<DoctorPatient> DoctorPatients { get; set; }

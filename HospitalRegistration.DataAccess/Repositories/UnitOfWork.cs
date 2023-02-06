@@ -9,8 +9,8 @@ namespace HospitalRegistration.DataAccess.Repositories
         public IPatientRepository PatientRepository { get; private set; }
         public IDepartmentRepository DepartmentRepository { get; private set; }
         public IDoctorRepository DoctorRepository { get; private set; }
-        public IIlnessRepository ilnessRepository { get; private set; }
-        public ISpecialtyRepository specialtyRepository { get; private set; }
+        public IIlnessRepository IllnessRepository { get; private set; }
+        public ISpecialtyRepository SpecialtyRepository { get; private set; }
         public UnitOfWork(DatabaseContext databaseContext,
             IPatientRepository patientRepository,
             IDepartmentRepository departmentRepository,
@@ -22,8 +22,8 @@ namespace HospitalRegistration.DataAccess.Repositories
             PatientRepository = patientRepository;
             DepartmentRepository = departmentRepository;
             DoctorRepository = doctorRepository;
-            this.ilnessRepository = ilnessRepository;
-            this.specialtyRepository = specialtyRepository;
+            IllnessRepository = ilnessRepository;
+            SpecialtyRepository = specialtyRepository;
         }
         public void SaveChanges()
         {

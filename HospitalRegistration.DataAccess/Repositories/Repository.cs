@@ -28,7 +28,7 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         public void Remove(T entity)
         {
-            //TODO
+            dbContext.Set<T>().Remove(entity);
         }
 
         public void RemoveRange(IEnumerable<T> entities)

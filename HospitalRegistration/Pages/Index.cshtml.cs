@@ -10,43 +10,19 @@ namespace HospitalRegistration.Pages
 {
     public class IndexModel : PageModel
     {
-        public IDbService _dbService;
-
-        public IGeneratorService DbMockDataGeneratorService;
-        public IUnitOfWork unitOfWork;
-
-        public IndexModel(IDbService dbService, IGeneratorService dbMockDataGeneratorService, IUnitOfWork unitOfWork)
+        private readonly IUnitOfWork _unitOfWork;
+        private readonly IHospitalService _hospitalService;
+        public IEnumerable<Patient> patients { get; set; }
+        public IndexModel(IUnitOfWork unitOfWork, IHospitalService hospitalService)
         {
-            _dbService = dbService;
-            DbMockDataGeneratorService = dbMockDataGeneratorService;
-            this.unitOfWork = unitOfWork;           
-        }
-
-        public void OnGetTest()
-        {
-            var patients = DbMockDataGeneratorService.GeneratePatients();
-            var docs = DbMockDataGeneratorService.GenerateDoctors();
-            var departments = DbMockDataGeneratorService.GenerateDepartments();
-            var illnesses = DbMockDataGeneratorService.GenerateIllnesses();
-            var specialties = DbMockDataGeneratorService.GenerateSpecialties();
-
-            if(
-                patients.Count != 0 &&
-                docs.Count != 0 &&
-                departments.Count != 0)
-            {
-                
-                unitOfWork.PatientRepository.AddRange(patients);
-                unitOfWork.DoctorRepository.AddRange(docs);
-                unitOfWork.DepartmentRepository.AddRange(departments);
-                unitOfWork.SaveChanges();
-            }
-        }
+            _unitOfWork = unitOfWork;
+            _hospitalService = hospitalService;
+        }        
         
 
         public void OnGet()
         {
-            var departments = _dbService.GetAll().ToList();
+            patients = _unitOfWork.PatientRepository.GetAll();
         }
     }
 }

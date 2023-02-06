@@ -11,7 +11,6 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class IllnessRepository : Repository<Illness>, IIlnessRepository
     {
-        IEnumerable<Illness> IllnessList { get; set; }
         public IllnessRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
 

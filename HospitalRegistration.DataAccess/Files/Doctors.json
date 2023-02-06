@@ -1,75 +1,111 @@
 ﻿[
 	{
 		"Name": "Ann",
-		"LastName": "Chovey"
+		"LastName": "Chovey",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Barry",
-		"LastName": "Cuda"
+		"LastName": "Cuda",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Barry",
-		"LastName": "Mundy"
+		"LastName": "Mundy",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "John",
-		"LastName": "Dory"
+		"LastName": "Dory",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Murray",
-		"LastName": "Cod"
+		"LastName": "Cod",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Coral",
-		"LastName": "Trout"
+		"LastName": "Trout",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Red",
-		"LastName": "Salmon"
+		"LastName": "Salmon",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Tiger",
-		"LastName": "Prawn"
+		"LastName": "Prawn",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Rock",
-		"LastName": "Cod"
+		"LastName": "Cod",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Rock",
-		"LastName": "Lobster"
+		"LastName": "Lobster",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Ray",
-		"LastName": "Manta"
+		"LastName": "Manta",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "E.L.",
-		"LastName": "Moray"
+		"LastName": "Moray",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Hazel",
-		"LastName": "Nutt"
+		"LastName": "Nutt",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Chris P.",
-		"LastName": "Creem"
+		"LastName": "Creem",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Chris P.",
-		"LastName": "Bacon"
+		"LastName": "Bacon",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Marsha",
-		"LastName": "Mellow"
+		"LastName": "Mellow",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Barb",
-		"LastName": "Akew"
+		"LastName": "Akew",
+		"Specialties": [],
+		"DoctorPatients": []
 	},
-	 {
+	{
 		"Name": "Marge",
-		"LastName": "Areen"
+		"LastName": "Areen",
+		"Specialties": [],
+		"DoctorPatients": []
 	}
 
 ]
