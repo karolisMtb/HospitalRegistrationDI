@@ -2,10 +2,10 @@
 {
     public class FailedDbActionException : Exception
     {
-        public string Message { get; }
-        public FailedDbActionException(string Message) : base(Message)
+        protected string Message { get; }
+        public FailedDbActionException(string message) : base(message)
         {
-            this.Message = Message;
+            Message = message;
         }
     }
 }

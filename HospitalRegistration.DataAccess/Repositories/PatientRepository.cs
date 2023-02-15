@@ -7,34 +7,55 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class PatientRepository : Repository<Patient>, IPatientRepository
     {
-        public IEnumerable<Patient> PatientsOfDoctor { get; set; }
         public PatientRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
 
         }
 
-        public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
+        private DatabaseContext DatabaseContext => dbContext as DatabaseContext;
 
-        public Patient GetPatient(Patient patient)
+        public async Task<Patient> GetPatientAsync(Guid patientId)
         {
-            return DatabaseContext.Patients.FirstOrDefault(patient);
+            return DatabaseContext.Patients.Where(x => x.Id == patientId).First();
         }
 
-        public void AddDoctorPatient(DoctorPatient doctorPatient)
+        public async Task AddDoctorPatientAsync(DoctorPatient doctorPatient)
         {
             DatabaseContext.DoctorPatients.Add(doctorPatient);
         }
 
-        public void AddPatientIllness(PatientIllness patientIllness)
+        public async Task AddPatientIllnessAsync(PatientIllness patientIllness)
         {
             DatabaseContext.PatientIllnesses.Add(patientIllness);
         }
 
-        public IEnumerable<Patient> GetAllPatientsOfDoctor(Doctor doctor)
+        public async Task<IEnumerable<Patient>> GetAllPatientsOfDoctorAsync(Guid doctorId)
         {
-            PatientsOfDoctor = new List<Patient>();
-            PatientsOfDoctor = DatabaseContext.DoctorPatients.Include(x => x.Patient).Where(x => x.DoctorId == doctor.Id).Select(x => x.Patient);
-            return PatientsOfDoctor;
+            return DatabaseContext.DoctorPatients.Include(x => x.Patient).Where(x => x.DoctorId == doctorId).Select(x => x.Patient).ToList();
+        }
+
+        public async Task DischargeAsync(Guid patientId)
+        {
+            // istrinti ligas 
+            DatabaseContext.PatientIllnesses.Include(x => x.Patient).Where(x => x.PatientId == patientId).Select(x => x.Patient).ToList();
+            var patients = DatabaseContext.DoctorPatients.Where(x => x.Patient.Id == patientId).Select(x => x.Patient).ToList();
+            //pabaigti. blogai parasyta
+            // istrinti doctorPatient irasa, bet neistrinti is db
+        }
+
+        public async Task SignInExistingPatientAsync(Guid patientId)
+        {
+
+            //find patient
+            //linq => select(new{patient})
+            //add illness
+            //asign to doctor
+            // if signed out == dateTime => dateTime = null;
+        }
+
+        public async Task<Patient> CheckIfPatientExistsAsync(string name, string lastName, DateTime dateOfBirth)
+        {
+            return DatabaseContext.Patients.Where(patient => patient.Name == name && patient.LastName == lastName && patient.DateOfBirth == dateOfBirth).First();
         }
     }
 }

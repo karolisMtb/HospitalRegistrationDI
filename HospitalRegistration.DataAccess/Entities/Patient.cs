@@ -22,7 +22,7 @@ namespace HospitalRegistration.DataAccess.Entities
             Name = name;
             LastName = lastName;
             DateOfBirth = dateOfBirth;
-            SignedIn = DateTime.Now;
+            SignedIn = DateTime.Now; //istrinti visa data ir signed in turi buti optional
             DoctorPatients = new List<DoctorPatient>();
             PatientIllnesses = new List<PatientIllness>();
         }

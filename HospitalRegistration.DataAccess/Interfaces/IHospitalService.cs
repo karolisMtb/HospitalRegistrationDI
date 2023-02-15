@@ -4,13 +4,13 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IHospitalService
     {
-        void DeleteDepartments();
-        IEnumerable<Department> GetAll();
-        void AsignDoctorToDepartment(Doctor doctor, Department department);
-        void AsignSpecialtyToDoctor(Doctor doctor, Specialty specialty);
-        void AsignPatientToDoctor(Doctor doctor, Patient patient);
-        void RegisterNewPatient(string Name, string LastName, DateTime DateOfBirth, DateTime SignedIn, string IllnessName);
-        void RegisterNewDoctor(string Name, string LastName, Specialty specialty);
-        void AsignPatientToNewDoctor();
+        Task DeleteDepartmentsAsync();
+        Task<IEnumerable<Department>> GetAllAsync();
+        Task AsignDoctorToDepartmentAsync(Guid doctorId, Guid departmentId);
+        Task AsignSpecialtyToDoctorAsync(Guid doctorId, Guid specialtyId);
+        Task AsignPatientToDoctorAsync(Guid doctorId, Guid patientId);
+        Task RegisterNewPatientAsync(string name, string lastName, DateTime dateOfBirth, string? illnessName); // illness turi buti optional. O jei tik uzsiregistruoti
+        Task RegisterNewDoctorAsync(string name, string lastName);
+        Task AsignPatientToNewDoctorAsync();
     }
 }

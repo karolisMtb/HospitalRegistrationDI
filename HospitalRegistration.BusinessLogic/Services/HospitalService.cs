@@ -1,6 +1,8 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
+using HospitalRegistration.DataAccess.Exceptions;
 using HospitalRegistration.DataAccess.Interfaces;
+using HospitalRegistration.DataAccess.Repositories;
 
 namespace HospitalRegistration.BusinessLogic.Services
 {
@@ -8,119 +10,123 @@ namespace HospitalRegistration.BusinessLogic.Services
     {
         private readonly IDepartmentRepository _departmentRepository;
         private readonly IUnitOfWork _unitOfWork;
-        private readonly DatabaseContext _databaseContext;
-        public string Message;
+        protected string Message;
+        protected IDoctorRepository _doctorRepository;
 
-        public HospitalService(IDepartmentRepository departmentRepository, IUnitOfWork unitOfWork, DatabaseContext databaseContext)
+        public HospitalService(IDepartmentRepository departmentRepository, IUnitOfWork unitOfWork, IDoctorRepository doctorRepository)
         {
             _departmentRepository = departmentRepository;
             _unitOfWork = unitOfWork;
-            _databaseContext = databaseContext;
+            _doctorRepository = doctorRepository;
         }
 
-        public void DeleteDepartments()
+        public HospitalService()
         {
-            if(GetAll().ToList().Count != 0)
-            {
-                _departmentRepository.RemoveAllDepartments();
-            }
+
+        }
+
+        public async Task DeleteDepartmentsAsync()
+        {
+            await _departmentRepository.RemoveAllDepartmentsAsync();
             _unitOfWork.SaveChanges();
         }
 
-        public IEnumerable<Department> GetAll()
+        public async Task<IEnumerable<Department>> GetAllAsync()
         {
-            return _departmentRepository.GetAll();
+            var departmentList = await _departmentRepository.GetAllAsync();
+            return departmentList;
         }
 
-        public void AsignDoctorToDepartment(Doctor doctor, Department department)
+        public async Task AsignDoctorToDepartmentAsync(Guid doctorId, Guid departmentId)
         {
-            var doctorToBeAsigned = _unitOfWork.DoctorRepository.GetDoctor(doctor);
-            var departmentToBeAsignedTo = _unitOfWork.DepartmentRepository.GetDepartment(department);
-            bool doctorAlreadyExistsInDepartment = departmentToBeAsignedTo.Doctors.Any(x => x.DepartmentId == doctor.Id);
+            var departmentToBeAsignedTo = await _unitOfWork.DepartmentRepository.GetDepartmentAsync(departmentId);
+            var doctorToBeAsigned = await _unitOfWork.DoctorRepository.GetDoctorAsync(doctorId);
 
-            if (doctor != null && department != null && !doctorAlreadyExistsInDepartment)
-            {
-                departmentToBeAsignedTo.Doctors.Add(doctorToBeAsigned);
-                _unitOfWork.SaveChanges();
-            }
+            departmentToBeAsignedTo.Doctors.Add(doctorToBeAsigned);
+            _unitOfWork.SaveChanges();
         }
 
-        public void AsignSpecialtyToDoctor(Doctor doctor, Specialty specialty)
+        public async Task AsignSpecialtyToDoctorAsync(Guid doctorId, Guid specialtyId)
         {
-            var doctorToBeAsignedTo = _unitOfWork.DoctorRepository.GetDoctor(doctor);
-            var specialtyToBeAsigned = _unitOfWork.SpecialtyRepository.GetSpecialty(specialty);
-            bool doctorHasSpecialty = doctorToBeAsignedTo.Specialties.Contains(specialty);
-            if(doctor != null && specialty != null && !doctorHasSpecialty)
-            {
-                doctorToBeAsignedTo.Specialties.Add(specialtyToBeAsigned);
+            if(doctorId != null && specialtyId != null) { // might remove (if) if it is not relevant in this case
+
+                await _unitOfWork.SpecialtyRepository.AsignSpecialtyToDocAsync(doctorId, specialtyId);
                 _unitOfWork.SaveChanges();
             }
             else
             {
-                Message = "Doctor already has this specialty";
+                throw new ObjectNotFoundException("Doctor or specialty was not found");
             }
         }
 
-        public void AsignPatientToDoctor(Doctor doctor, Patient patient)
+        public async Task AsignPatientToDoctorAsync(Guid doctorId, Guid patientId)
         {
-            var patientToBeAsigned = _unitOfWork.PatientRepository.GetPatient(patient);
-            var doctorToBeAsignedTo = _unitOfWork.DoctorRepository.GetDoctor(doctor);
+            var patientToBeAsigned = await _unitOfWork.PatientRepository.GetPatientAsync(patientId);
+            var doctorToBeAsignedTo = await _unitOfWork.DoctorRepository.GetDoctorAsync(doctorId);
             DoctorPatient doctorPatient = new();
 
 
             if(doctorToBeAsignedTo.DoctorPatients.Any(x => x.PatientId == patientToBeAsigned.Id))
             {
-                Message = "This patient is already asigned to doctor";
-                return;
+                throw new Exception("Patient already asignd to doctor");
             }
             else
             {
                 doctorPatient.Patient = patientToBeAsigned;
                 doctorPatient.Doctor = doctorToBeAsignedTo;
-                doctorPatient.Count = 1;
 
-                _unitOfWork.PatientRepository.AddDoctorPatient(doctorPatient);
+                await _unitOfWork.PatientRepository.AddDoctorPatientAsync(doctorPatient);
                 _unitOfWork.SaveChanges();
             }
                 
         }
 
-        public void RegisterNewPatient(string Name, string LastName, DateTime DateOfBirth, DateTime SignedIn, string IllnessName)
+        public async Task RegisterNewPatientAsync(string name, string lastName, DateTime dateOfBirth, string? illnessName)
         {
-            Patient newPatient = new Patient(Name, LastName, DateOfBirth);
-            Illness newIllness = new Illness(IllnessName);
-            newPatient.SignedIn = SignedIn;
+            Patient existingPatientInDB = await _unitOfWork.PatientRepository.CheckIfPatientExistsAsync(name, lastName, dateOfBirth);
 
-
-            PatientIllness patientIllness = new PatientIllness();
-            patientIllness.Illness = newIllness;
-            patientIllness.Patient = newPatient;
-
-            _unitOfWork.PatientRepository.AddPatientIllness(patientIllness);
-            _unitOfWork.SaveChanges();
-        }
-
-        public void RegisterNewDoctor(string Name, string LastName, Specialty specialty)
-        {
-            Doctor newDoctor = new Doctor(Name, LastName);
-            newDoctor.Specialties.Add(specialty);
-            _unitOfWork.DoctorRepository.Add(newDoctor);
-            _unitOfWork.SaveChanges();
-        }
-
-        public void DischargePatient(Patient patient)
-        {
-            var patientToBeDischarged = _unitOfWork.PatientRepository.GetPatient(patient);
-            if(patientToBeDischarged.SignedIn != null)
+            if(existingPatientInDB != null)
             {
-                patientToBeDischarged.SignedOut = DateTime.Now;
-                _unitOfWork.PatientRepository.Remove(patientToBeDischarged);
+               await _unitOfWork.PatientRepository.SignInExistingPatientAsync(existingPatientInDB.Id);
+            }
+            else
+            {
+                Patient newPatient = new Patient(name, lastName, dateOfBirth);
+                PatientIllness newPatientIllness = new PatientIllness();
+                Illness newIllness = new Illness(illnessName);
+
+                newPatient.SignedIn = DateTime.UtcNow;
+                newPatientIllness.Patient = newPatient;
+                newPatientIllness.Illness = newIllness;
+
+                await _unitOfWork.PatientRepository.AddPatientIllnessAsync(newPatientIllness);
+                
+            }
+
+            _unitOfWork.SaveChanges();
+        }
+
+        public async Task RegisterNewDoctorAsync(string name, string lastName)
+        {
+            Doctor newDoctor = new Doctor(name, lastName);
+            await _unitOfWork.DoctorRepository.AddAsync(newDoctor); // testuojant DoctorRepository nesukurtas instance
+            _unitOfWork.SaveChanges();
+        }
+
+
+        public async Task DischargePatientAsync(Guid patientId)
+        {
+            var patientToBeDischarged = await _unitOfWork.PatientRepository.GetPatientAsync(patientId);
+            if(patientToBeDischarged.SignedOut == null)
+            {
+                // pasalinti ligas is paciento. Pasalinti pacienta is DoctorPatient
+                await _unitOfWork.PatientRepository.DischargeAsync(patientToBeDischarged.Id);
                 _unitOfWork.SaveChanges();
             }
         }
 
         //TODO
-        public void AsignPatientToNewDoctor()
+        public async Task AsignPatientToNewDoctorAsync()
         {
 
         }

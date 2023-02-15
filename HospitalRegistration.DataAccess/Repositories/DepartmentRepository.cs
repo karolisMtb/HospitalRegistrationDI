@@ -3,20 +3,20 @@ using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Exceptions;
 using Microsoft.EntityFrameworkCore;
+using System.Runtime.CompilerServices;
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DepartmentRepository : Repository<Department>, IDepartmentRepository
     {
-        public IEnumerable<Department> departmentList { get; set; }
         public DepartmentRepository( DatabaseContext databaseContext) : base(databaseContext)
         {
 
         }
 
-        public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
+        private DatabaseContext DatabaseContext => dbContext as DatabaseContext;
 
-        public void RemoveAllDepartments()
+        public async Task RemoveAllDepartmentsAsync()
         {
             foreach (var department in DatabaseContext.Departments)
             {
@@ -24,9 +24,9 @@ namespace HospitalRegistration.DataAccess.Repositories
             }
         }
 
-        public Department GetDepartment(Department department)
+        public async Task<Department> GetDepartmentAsync(Guid departmentId)
         {
-            var matchingDepartment = DatabaseContext.Departments.Where(x=> x.Id== department.Id).FirstOrDefault();
+            var matchingDepartment = DatabaseContext.Departments.Where(x=> x.Id == departmentId).FirstOrDefault();
             if (matchingDepartment == null)
             {
                 throw new FailedDbActionException("Department was not found");
@@ -37,41 +37,41 @@ namespace HospitalRegistration.DataAccess.Repositories
             }
         }
 
-        public IEnumerable<Department> GetAllDepartments()
+        public async Task<IEnumerable<Department>> GetAllDepartmentsAsync()
         {
-            departmentList = new List<Department>();
-            if(dbContext != null && DatabaseContext.Departments.ToList().Count != 0)
-            {
-                departmentList = DatabaseContext.Departments.ToList();
-            }
-
-            return departmentList;
+            return DatabaseContext.Departments.ToList();
         }
-        public IEnumerable<Doctor> GetAllDoctorsOfDepartment(Department department)
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsOfDepartmentAsync(Guid departmentId)
         {
-            departmentList = GetAllDepartments();
-
-            return departmentList.Where(department => department.Id == department.Id).SelectMany(department => department.Doctors).ToList();
+            return DatabaseContext.Departments.Where(department => department.Id == department.Id).SelectMany(department => department.Doctors).ToList();
         }
 
-        public IEnumerable<Patient> GetAllPatientsOfDepartment(Department department)
+        public async Task<IEnumerable<Patient>> GetAllPatientsOfDepartmentAsync(Guid departmentId)
         {
-            IEnumerable<Doctor> doctorsOfDepartment = GetAllDoctorsOfDepartment(department);
-            IEnumerable<Patient> patientsOfDepartment = new List<Patient>();
-            foreach (var doctor in doctorsOfDepartment)
-            {
-               patientsOfDepartment = DatabaseContext.DoctorPatients.Include(doctorPatient => doctorPatient.Patient).Where(doctorPatient => doctorPatient.DoctorId == doctor.Id).Select(x => x.Patient);
-            }
-            return patientsOfDepartment;
+
+            //gauti visus departamento pacientus
+            return DatabaseContext.Departments.Where(department => department.Id == departmentId)
+                .SelectMany(x => x.Doctors.Where(doctor => doctor.DepartmentId == departmentId)
+                .SelectMany(x => x.DoctorPatients).Select(x => x.Patient).ToList());
         }
         
-        public void RemoveDoctorFromDepartment(Doctor doctor, Department department)
+        public async Task RemoveDoctorFromDepartmentAsync(Guid doctorId, Guid departmentId)
         {
-            bool doctorExistsInDepartment = department.Doctors.Any(x => x.Id == doctor.Id);
-            if(doctor != null && department != null && doctorExistsInDepartment)
+            // drop down list ismeta tik tuos gydytojus is departamento kurie ten egzistuoja
+            try
             {
-                var doctorToRemove = DatabaseContext.Departments.Find(department).Doctors.Where(x => x.Id == doctor.Id);
-                DatabaseContext.Remove(doctorToRemove);
+                var doctorsInDepartment = DatabaseContext.Departments.Where(department => department.Id == departmentId)
+                    .SelectMany(x => x.Doctors.Where(doctor => doctor.Id == doctorId))
+                    .ToList();
+
+                foreach(var doctor in doctorsInDepartment)
+                {
+                    doctorsInDepartment.Remove(doctor);
+                }
+            }
+            catch
+            {
+                throw new UnsuccessfullOperationException("Failed to delete doctor from department");
             }
         }
        

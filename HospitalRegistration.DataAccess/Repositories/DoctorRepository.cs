@@ -7,7 +7,6 @@ namespace HospitalRegistration.DataAccess.Repositories
 {
     public class DoctorRepository : Repository<Doctor>, IDoctorRepository
     {
-        public IEnumerable<Doctor> DoctorsOfPatient { get; set; }
         public DoctorRepository(DatabaseContext databaseContext) : base(databaseContext)
         {
 
@@ -15,16 +14,14 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
         
-        public Doctor GetDoctor(Doctor doctor)
+        public async Task<Doctor> GetDoctorAsync(Guid doctorId)
         {
-            return DatabaseContext.Doctors.FirstOrDefault(doctor);
+            return DatabaseContext.Doctors.FirstOrDefault(x => x.Id == doctorId);
         }
 
-        public IEnumerable<Doctor> GetAllDoctorsOfPatient(Patient patient)
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsOfPatientAsync(Guid patientId)
         {
-            DoctorsOfPatient = new List<Doctor>();
-            DoctorsOfPatient = (IEnumerable<Doctor>)DatabaseContext.DoctorPatients.Include(x => x.Doctor).Where(x => x.PatientId == patient.Id).Select(x => x.Patient);
-            return DoctorsOfPatient;
+           return DatabaseContext.DoctorPatients.Include(x => x.Doctor).Where(x => x.PatientId == patientId).Select(x => x.Doctor).ToList();
         }
             
     }

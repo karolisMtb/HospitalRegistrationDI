@@ -6,11 +6,11 @@ namespace HospitalRegistration.DataAccess.Repositories
     public class UnitOfWork : IUnitOfWork
     {
         private readonly DatabaseContext _databaseContext;
-        public IPatientRepository PatientRepository { get; private set; }
-        public IDepartmentRepository DepartmentRepository { get; private set; }
-        public IDoctorRepository DoctorRepository { get; private set; }
-        public IIlnessRepository IllnessRepository { get; private set; }
-        public ISpecialtyRepository SpecialtyRepository { get; private set; }
+        public virtual IPatientRepository PatientRepository { get;  set; }
+        public virtual IDepartmentRepository DepartmentRepository { get;  set; }
+        public virtual IDoctorRepository DoctorRepository { get;  set; }
+        public virtual IIlnessRepository IllnessRepository { get;  set; }
+        public virtual ISpecialtyRepository SpecialtyRepository { get;  set; }
         public UnitOfWork(DatabaseContext databaseContext,
             IPatientRepository patientRepository,
             IDepartmentRepository departmentRepository,
@@ -25,9 +25,16 @@ namespace HospitalRegistration.DataAccess.Repositories
             IllnessRepository = ilnessRepository;
             SpecialtyRepository = specialtyRepository;
         }
+
+        public UnitOfWork()
+        {
+
+        }
         public void SaveChanges()
         {
             _databaseContext.SaveChanges();
         }
+        // prideti write line query string i metoda kuris turi du add metodus i db ir tikrinti ar mes klaida po SaveChanges(); Rokui
+
     }
 }

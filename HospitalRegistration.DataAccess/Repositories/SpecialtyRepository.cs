@@ -1,6 +1,7 @@
 ﻿using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
+using Microsoft.EntityFrameworkCore;
 
 namespace HospitalRegistration.DataAccess.Repositories
 {
@@ -11,19 +12,20 @@ namespace HospitalRegistration.DataAccess.Repositories
 
         }
 
-        public DatabaseContext DatabaseContext => dbContext as DatabaseContext;
+        private DatabaseContext DatabaseContext => dbContext as DatabaseContext;
 
-        public Specialty GetSpecialty(Specialty specialty)
+        public async Task<Specialty> GetSpecialtyAsync(Guid specialtyId)
         {
-            return DatabaseContext.DoctorSpecialties.FirstOrDefault(specialty);
+            return DatabaseContext.DoctorSpecialties.Where(specialty => specialty.Id == specialtyId).First();
         }
 
-        public void AsignSpecialtyToDoctor(Doctor doctor, Specialty specialty)
+        public async Task AsignSpecialtyToDocAsync(Guid doctorId, Guid specialtyId)
         {
-            bool doctorHasThisSpecialty = doctor.Specialties.Where(x=>x.Name == specialty.Name).Any();
-            if(doctor != null && specialty != null && !doctorHasThisSpecialty)
+            bool doctorHasThisSpecialty = DatabaseContext.DoctorSpecialties.Include(x => x.Doctors.Where(doctor => doctor.Id == doctorId)).Where(specialty => specialty.Id == specialtyId).Any();
+            
+            if(!doctorHasThisSpecialty)
             {
-                doctor.Specialties.Add(specialty);
+                DatabaseContext.Doctors.Where(doctor => doctor.Id == doctorId).First().Specialties.Add(await GetSpecialtyAsync(specialtyId));
             }
         }
     }

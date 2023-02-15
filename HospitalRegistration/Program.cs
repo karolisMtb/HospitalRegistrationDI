@@ -5,6 +5,7 @@ using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
 using HospitalRegistration.Pages;
+using HospitalRegistration.Tests.Services;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,7 +23,6 @@ builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
 builder.Services.AddScoped<IHospitalService, HospitalService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<DbInitializerService>();
-builder.Services.AddScoped<IConfiguration>();
 
 var app = builder.Build();
 

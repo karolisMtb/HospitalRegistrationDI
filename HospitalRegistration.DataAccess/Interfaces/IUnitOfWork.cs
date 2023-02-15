@@ -2,7 +2,7 @@
 {
     public interface IUnitOfWork
     {
-        IPatientRepository PatientRepository { get;}
+        IPatientRepository PatientRepository { get; }
         IDepartmentRepository DepartmentRepository { get; }
         IDoctorRepository DoctorRepository { get; }
         ISpecialtyRepository SpecialtyRepository { get; }

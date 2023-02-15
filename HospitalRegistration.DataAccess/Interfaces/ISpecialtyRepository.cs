@@ -4,7 +4,7 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface ISpecialtyRepository : IRepository<Specialty>
     {
-        Specialty GetSpecialty(Specialty specialty);
-        void AsignSpecialtyToDoctor(Doctor doctor, Specialty specialty);
+        Task<Specialty> GetSpecialtyAsync(Guid specialtyId);
+        Task AsignSpecialtyToDocAsync(Guid doctorId, Guid specialtyId);
     }
 }

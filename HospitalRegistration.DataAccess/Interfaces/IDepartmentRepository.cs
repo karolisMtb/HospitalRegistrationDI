@@ -4,10 +4,10 @@ namespace HospitalRegistration.DataAccess.Interfaces
 {
     public interface IDepartmentRepository : IRepository<Department>
     {
-        IEnumerable<Doctor> GetAllDoctorsOfDepartment(Department department);
-        IEnumerable<Patient> GetAllPatientsOfDepartment(Department department);
-        Department GetDepartment(Department department);
-        void RemoveDoctorFromDepartment(Doctor doctor, Department department);
-        void RemoveAllDepartments();
+        Task<IEnumerable<Doctor>> GetAllDoctorsOfDepartmentAsync(Guid departmentId);
+        Task<IEnumerable<Patient>> GetAllPatientsOfDepartmentAsync(Guid departmentId);
+        Task<Department> GetDepartmentAsync(Guid departmentId);
+        Task RemoveDoctorFromDepartmentAsync(Guid doctorId, Guid departmentId);
+        Task RemoveAllDepartmentsAsync();
     }
 }

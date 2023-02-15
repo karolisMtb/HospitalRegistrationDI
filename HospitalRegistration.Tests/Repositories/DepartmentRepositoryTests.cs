@@ -1,4 +1,5 @@
-﻿using HospitalRegistration.DataAccess.DataContext;
+﻿using FluentAssertions;
+using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
@@ -6,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 using NUnit.Framework;
+using Assert = NUnit.Framework.Assert;
 
 namespace HospitalRegistration.Tests.Repositories
 {
@@ -19,7 +21,7 @@ namespace HospitalRegistration.Tests.Repositories
         protected DbContextOptions<DatabaseContext> dbContextoptions;
 
         [SetUp]
-        public void SetUp()
+        public async Task SetUp()
         {
             unitOfWorkMock = new Mock<IUnitOfWork>();
             databaseContextMock = new Mock<DatabaseContext>();
@@ -27,30 +29,37 @@ namespace HospitalRegistration.Tests.Repositories
             dbSetMock = new Mock<DbSet<Department>>();
         }
 
+        private DatabaseContext GetContext()
+        {
+            var options = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "HospitalDb").Options;
+            return new DatabaseContext(options);
+        }
+
         [TestMethod]
-        public void ItShould_GetDepartmentFromDatabase()
+        public async void ItShould_GetDepartmentFromDatabase()
         {
             //Arrange
-            var options = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "HospitalDb").Options;
-            var context = new DatabaseContext(options);
+            await SetUp();
+            var context = GetContext();
             var department = new Department("xxx");
             context.Departments.Add(department);
             context.SaveChanges();
             DepartmentRepository dr = new DepartmentRepository(context);
 
             //Act
-            var result = dr.GetDepartment(department);
+            var result = dr.GetDepartmentAsync(department.Id);
 
             //Assert
-            department.Equals(result);
+            Assert.AreEqual(department, result);//isidemeti
         }
 
         [TestMethod]
-        public void ItShould_ReturnAllDoctorsFromDepartment()
+        public async void ItShould_ReturnAllDoctorsFromDepartment()
         {
+
             //Arrange
-            var options = new DbContextOptionsBuilder<DatabaseContext>().UseInMemoryDatabase(databaseName: "HospitalDb").Options;
-            var context = new DatabaseContext(options);
+            await SetUp();
+            var context = GetContext();
             var department = new Department("Radiology");
             var doctor1 = new Doctor("Kaulas", "Kauliukas");
             var doctor2 = new Doctor("Puodas", "Puodziunas");
@@ -61,16 +70,20 @@ namespace HospitalRegistration.Tests.Repositories
             DepartmentRepository dr = new DepartmentRepository(context);
 
             //Act
-            var doctors = dr.GetAllDoctorsOfDepartment(department);
+            var doctors = dr.GetAllDoctorsOfDepartmentAsync(department.Id);
 
             //Assert
-            doctors.Count().Equals(2);
+            Assert.AreEqual(doctors.Result, 2);
         }
 
         [TestMethod]
-        public void ItShould_ReturnAllPatientsInDepartment()
+        public async Task ItShould_ReturnAllPatientsInDepartment()
         {
+            //Arrange
 
+            //Act
+
+            //Assert
         }
 
     } 

@@ -6,7 +6,6 @@
         public Guid IlnessId { get; set; }
         public Patient Patient { get; set; }
         public Illness Illness { get; set; }
-        public int Count { get; set; }
 
     }
 }

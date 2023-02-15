@@ -11,27 +11,27 @@ namespace HospitalRegistration.DataAccess.Repositories
         {
             this.dbContext = dbContext;
         }
-        public IEnumerable<T> GetAll()
+        public async Task<IEnumerable<T>> GetAllAsync()
         {
             return dbContext.Set<T>().ToList();
         }
 
-        public void Add(T entity)
+        public async Task AddAsync(T entity)
         {
             dbContext.Set<T>().Add(entity);
         }
 
-        public void AddRange(IEnumerable<T> entities)
+        public async Task AddRangeAsync(IEnumerable<T> entities)
         {
             dbContext.Set<T>().AddRange(entities);
         }
 
-        public void Remove(T entity)
+        public async Task RemoveAsync(T entity)
         {
             dbContext.Set<T>().Remove(entity);
         }
 
-        public void RemoveRange(IEnumerable<T> entities)
+        public async Task RemoveRangeAsync(IEnumerable<T> entities)
         {
             dbContext.Set<T>().RemoveRange(entities);
         }
