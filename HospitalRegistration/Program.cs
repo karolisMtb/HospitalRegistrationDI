@@ -22,6 +22,7 @@ builder.Services.AddScoped<IIlnessRepository, IllnessRepository>();
 builder.Services.AddScoped<ISpecialtyRepository, SpecialtyRepository>();
 builder.Services.AddScoped<IHospitalService, HospitalService>();
 builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<DbInitializerService>();
 
 var app = builder.Build();

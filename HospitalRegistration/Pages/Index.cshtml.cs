@@ -1,19 +1,16 @@
-﻿using HospitalRegistration.BusinessLogic.Services;
-using HospitalRegistration.DataAccess.DataContext;
-using HospitalRegistration.DataAccess.Entities;
+﻿using HospitalRegistration.DataAccess.Entities;
 using HospitalRegistration.DataAccess.Interfaces;
-using Microsoft.AspNetCore.Mvc;
+using HospitalRegistration.DataAccess.Repositories;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace HospitalRegistration.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly IUnitOfWork _unitOfWork;
+        private readonly UnitOfWork _unitOfWork;
         private readonly IHospitalService _hospitalService;
-        public IEnumerable<Patient> patients { get; set; }
-        public IndexModel(IUnitOfWork unitOfWork, IHospitalService hospitalService)
+        public IEnumerable<Patient> patients;
+        public IndexModel(UnitOfWork unitOfWork, IHospitalService hospitalService)
         {
             _unitOfWork = unitOfWork;
             _hospitalService = hospitalService;

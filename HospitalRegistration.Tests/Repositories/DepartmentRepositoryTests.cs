@@ -14,16 +14,15 @@ namespace HospitalRegistration.Tests.Repositories
     [TestClass]
     public class DepartmentRepositoryTests
     {
-        protected Mock<IUnitOfWork> unitOfWorkMock;
+        protected Mock<UnitOfWork> unitOfWorkMock;
         protected Mock<DatabaseContext> databaseContextMock;
         protected DepartmentRepository departmentRepository;
         protected Mock<DbSet<Department>> dbSetMock;
         protected DbContextOptions<DatabaseContext> dbContextoptions;
 
-        [SetUp]
-        public async Task SetUp()
+        public DepartmentRepositoryTests()
         {
-            unitOfWorkMock = new Mock<IUnitOfWork>();
+            unitOfWorkMock = new Mock<UnitOfWork>();
             databaseContextMock = new Mock<DatabaseContext>();
             departmentRepository = new DepartmentRepository(databaseContextMock.Object);
             dbSetMock = new Mock<DbSet<Department>>();
@@ -39,7 +38,6 @@ namespace HospitalRegistration.Tests.Repositories
         public async void ItShould_GetDepartmentFromDatabase()
         {
             //Arrange
-            await SetUp();
             var context = GetContext();
             var department = new Department("xxx");
             context.Departments.Add(department);
@@ -58,7 +56,6 @@ namespace HospitalRegistration.Tests.Repositories
         {
 
             //Arrange
-            await SetUp();
             var context = GetContext();
             var department = new Department("Radiology");
             var doctor1 = new Doctor("Kaulas", "Kauliukas");

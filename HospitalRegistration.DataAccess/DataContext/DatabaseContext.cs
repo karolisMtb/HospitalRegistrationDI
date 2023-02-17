@@ -17,6 +17,10 @@ namespace HospitalRegistration.DataAccess.DataContext
         {
 
         }
+        public DatabaseContext()
+        {
+
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
