@@ -18,7 +18,8 @@ namespace HospitalRegistration.Tests.Services
         protected Mock<DatabaseContext> DatabaseContextMock;
         protected HospitalService Service;
         protected Mock<ISpecialtyRepository> SpecialtyRepositoryMock;
-
+        protected Mock<IPatientRepository> PatientRepositoryMock;
+        protected Mock<IDoctorPatientRepository> DoctorPatientRepositoryMock;
         protected Mock<IDoctorRepository> DoctorRepositoryMock;
 
         public HospitalServiceTests()
@@ -27,8 +28,17 @@ namespace HospitalRegistration.Tests.Services
             UnitOfWorkMock = new Mock<IUnitOfWork>();
             DatabaseContextMock = new Mock<DatabaseContext>();
             DoctorRepositoryMock = new Mock<IDoctorRepository>();
-            Service = new HospitalService(DepartmentRepositoryMock.Object, UnitOfWorkMock.Object, DoctorRepositoryMock.Object);
             SpecialtyRepositoryMock = new Mock<ISpecialtyRepository>();
+            PatientRepositoryMock = new Mock<IPatientRepository>();
+            DoctorPatientRepositoryMock = new Mock<IDoctorPatientRepository>();
+
+            Service = new HospitalService(
+                DepartmentRepositoryMock.Object, 
+                UnitOfWorkMock.Object, 
+                DoctorRepositoryMock.Object, 
+                PatientRepositoryMock.Object, 
+                SpecialtyRepositoryMock.Object, 
+                DoctorPatientRepositoryMock.Object);
         }
 
         [Test]
@@ -39,37 +49,29 @@ namespace HospitalRegistration.Tests.Services
             var specialty = new Specialty("Chirurgas");
             doctor.Specialties.Add(specialty);
 
-
-            DoctorRepositoryMock.Setup(x => x.GetDoctorAsync(doctor.Id)).ReturnsAsync(doctor);
-
-            //DoctorRepositoryMock.Setup(x => x.GetDoctorAsync(It.IsAny<Doctor>().Id)).ReturnsAsync(doctor);
-            //UnitOfWorkMock.Setup(x => x.SpecialtyRepository.GetSpecialtyAsync(It.IsAny<Specialty>().Id)).ReturnsAsync(specialty);
-
             //Act
             Service.AsignSpecialtyToDoctorAsync(doctor.Id, specialty.Id);
 
             //Assert
             doctor.Specialties.Should().HaveCount(1);
             UnitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once);
-            //verify ar visi repo metodai buvo iskviesti
         }
 
         [Test]
         public async Task ItShould_AsignDoctorToDepartment()
         {
-            ////Arrange
-            //Doctor doctor = new("Baba", "Usorius");
-            //Department department = new("Emergency");
+            //Arrange
+            Doctor doctor = new("Baba", "Usorius");
+            Department department = new("Emergency");
+            DepartmentRepositoryMock.Setup(x => x.GetDepartmentAsync(department.Id)).ReturnsAsync(department);
+            DoctorRepositoryMock.Setup(x => x.GetDoctorAsync(doctor.Id)).ReturnsAsync(doctor);
 
-            //UnitOfWorkMock.Setup(x => x.DepartmentRepository.GetDepartmentAsync(It.IsAny<Department>().Id)).ReturnsAsync(department);
-            //UnitOfWorkMock.Setup(x => x.DoctorRepository.GetDoctorAsync(It.IsAny<Doctor>().Id)).ReturnsAsync(doctor);
+            //Act
+            Service.AsignDoctorToDepartmentAsync(doctor.Id, department.Id);
 
-            ////Act
-            //Service.AsignDoctorToDepartmentAsync(doctor.Id, department.Id);
-
-            ////Assert
-            //department.Doctors.Should().HaveCount(1);
-            //UnitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once);
+            //Assert
+            department.Doctors.Should().HaveCount(1);
+            UnitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once);
         }
 
         [Test]
@@ -82,8 +84,43 @@ namespace HospitalRegistration.Tests.Services
             await Service.RegisterNewDoctorAsync(doctor.Name, doctor.LastName);
 
             //Assert
-            UnitOfWorkMock.Verify(x => x.AddToDoctorRepository(It.IsAny<Doctor>()), Times.Once());
             UnitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
+        [Test]
+        public async Task CheckPatientSignedOut_DischargePatient_PatientSignedOut_IllnessesNull()
+        {
+            //Arrange
+            Patient patient = new Patient("Gezas", "Gezelis", new DateTime(1999, 05, 10));
+            patient.SignedIn = new DateTime(2023, 02, 03, 16, 33, 42);
+
+            Illness illness = new("Headache");
+            PatientIllness patientIllness = new();
+
+            patientIllness.Patient = patient;
+            patientIllness.Illness = illness;
+
+            PatientRepositoryMock.Setup(x => x.GetPatientAsync(patient.Id)).ReturnsAsync(patient);
+            PatientRepositoryMock.Setup(x => x.DischargeAsync(patient.Id));
+
+            //Act
+            await Service.DischargePatientAsync(patient.Id);
+
+            //Assert
+            PatientRepositoryMock.Verify(x => x.DischargeAsync(patient.Id), Times.Once());
+            UnitOfWorkMock.Verify(x => x.SaveChanges(), Times.Once());
+        }
+
+        [Test]
+        public async Task ItShould_RegisterNewPatient_ReturnsIfSuccessfull()
+        {
+            //Arrange
+            Patient patient = new Patient("Gezas", "Gezelis", new DateTime(1999, 05, 10));
+
+            //Act
+
+
+            //Assert
         }
     }
 }

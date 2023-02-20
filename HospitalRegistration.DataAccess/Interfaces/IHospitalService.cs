@@ -9,8 +9,8 @@ namespace HospitalRegistration.DataAccess.Interfaces
         Task AsignDoctorToDepartmentAsync(Guid doctorId, Guid departmentId);
         Task AsignSpecialtyToDoctorAsync(Guid doctorId, Guid specialtyId);
         Task AsignPatientToDoctorAsync(Guid doctorId, Guid patientId);
-        Task RegisterNewPatientAsync(string name, string lastName, DateTime dateOfBirth, string? illnessName); // illness turi buti optional. O jei tik uzsiregistruoti
+        Task RegisterNewPatientAsync(string name, string lastName, DateTime dateOfBirth, string? illnessName);
         Task RegisterNewDoctorAsync(string name, string lastName);
-        Task AsignPatientToNewDoctorAsync();
+        Task AsignPatientToNewDoctorAsync(Guid patientId, Guid doctorId);
     }
 }

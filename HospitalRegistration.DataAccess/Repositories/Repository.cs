@@ -35,6 +35,11 @@ namespace HospitalRegistration.DataAccess.Repositories
         {
             dbContext.Set<T>().RemoveRange(entities);
         }
+
+        public async Task Update(T entity)
+        {
+            dbContext.Set<T>().Update(entity);
+        }
         public void Dispose()
         {
             dbContext.Dispose();

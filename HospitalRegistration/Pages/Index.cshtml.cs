@@ -7,19 +7,20 @@ namespace HospitalRegistration.Pages
 {
     public class IndexModel : PageModel
     {
-        private readonly UnitOfWork _unitOfWork;
         private readonly IHospitalService _hospitalService;
+        private readonly IPatientRepository _patientRepository;
         public IEnumerable<Patient> patients;
-        public IndexModel(UnitOfWork unitOfWork, IHospitalService hospitalService)
+        public IndexModel(IHospitalService hospitalService, IPatientRepository patientRepository)
         {
-            _unitOfWork = unitOfWork;
             _hospitalService = hospitalService;
+            _patientRepository = patientRepository;
+
         }        
         
 
         public async Task OnGet()
         {
-            //patients = await _unitOfWork.PatientRepository.GetAllAsync();
+            patients = await _patientRepository.GetAllAsync();
         }
     }
 }
