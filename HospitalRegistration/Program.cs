@@ -5,6 +5,8 @@ using HospitalRegistration.DataAccess.DataContext;
 using HospitalRegistration.DataAccess.Interfaces;
 using HospitalRegistration.DataAccess.Repositories;
 using HospitalRegistration.Pages;
+using HospitalRegistration.Pages.Doctors;
+using HospitalRegistration.Pages.Patients;
 using HospitalRegistration.Tests.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,9 +14,12 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container. Dependency injections
 builder.Services.AddRazorPages();
-builder.Services.AddDbContext<DatabaseContext>(options => { options.UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True"); }, ServiceLifetime.Transient);
+//builder.Services.AddDbContext<DatabaseContext>(options => { options.UseSqlServer($@"Data Source = LAZYBASTARD\; MultipleActiveResultSets=true; Initial Catalog = HospitalDB; Integrated Security = True"); }, ServiceLifetime.Transient);
+builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")), ServiceLifetime.Transient); // testas
 builder.Services.AddScoped<IGeneratorService, DbMockDataGeneratorService>();
 builder.Services.AddScoped<IndexModel>();
+//builder.Services.AddScoped<DoctorsModel>();
+//builder.Services.AddScoped<ResultModel>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
@@ -25,6 +30,8 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 builder.Services.AddScoped<UnitOfWork>();
 builder.Services.AddScoped<DbInitializerService>();
 builder.Services.AddScoped<IDoctorPatientRepository, DoctorPatientRepository>();
+
+builder.Services.AddHealthChecks();
 
 var app = builder.Build();
 

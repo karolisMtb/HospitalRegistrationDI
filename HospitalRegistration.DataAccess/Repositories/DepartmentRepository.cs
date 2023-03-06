@@ -27,6 +27,7 @@ namespace HospitalRegistration.DataAccess.Repositories
         public async Task<Department> GetDepartmentAsync(Guid departmentId)
         {
             var matchingDepartment = DatabaseContext.Departments.Where(x=> x.Id == departmentId).FirstOrDefault();
+
             if (matchingDepartment == null)
             {
                 throw new FailedDbActionException("Department was not found");
@@ -49,7 +50,6 @@ namespace HospitalRegistration.DataAccess.Repositories
         public async Task<IEnumerable<Patient>> GetAllPatientsOfDepartmentAsync(Guid departmentId)
         {
 
-            //gauti visus departamento pacientus
             return DatabaseContext.Departments.Where(department => department.Id == departmentId)
                 .SelectMany(x => x.Doctors.Where(doctor => doctor.DepartmentId == departmentId)
                 .SelectMany(x => x.DoctorPatients).Select(x => x.Patient).ToList());

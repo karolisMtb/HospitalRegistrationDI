@@ -1,0 +1,40 @@
+﻿@page "/doctors/search"
+@model HospitalRegistration.Pages.Doctors.DoctorsModel
+@{
+    Layout = "../Shared/_LayoutHospital.cshtml";
+    ViewData["Title"] = "Doctors";
+}
+
+@section RightFooter {
+    <img src="~/images/leaves.jpg" />
+}
+<div class="container p-3">
+    <div class="row pt-4">
+        <div class="col-6">
+            <h2>Search doctor</h2>
+        </div>
+    </div>
+    <form action="" method="post">
+        <div class="mb-3">            
+            <label class="labelClass form-label" asp-for="doctor.Name">Name</label>
+            <input class="form-control" type="text" asp-for="doctor.Name" name="_name" placeholder="Enter name"/>
+        </div>
+        <div class="mb-3">     
+            <label  class="labelClass form-label" asp-for="doctor.LastName">Last name</label>
+            <input class="form-control" type="text" asp-for="doctor.LastName" name="_lastName" placeholder="Enter last name"/>
+        </div>        
+        <div class="mb-3">
+            <label class="labelClass form-label" asp-for="specialty.Name">Specialty</label>
+            <input class="form-control" type="text" asp-for="specialty.Name" name="_specialtyName" placeholder="Enter specialty"/>
+        </div>
+        <input type="submit" class="submitBtn btn btn-primary" value="Search"/>
+        <input type="reset" class="clearBtn btn btn-primary" value="Clear"/>
+    </form>
+</div>
+
+@*get doctor by name*@
+@*get all doctors
+get all doctors including their patients
+get get doctor including his specialty
+get all doctors including their specialties*@
+

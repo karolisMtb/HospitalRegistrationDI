@@ -9,7 +9,6 @@ namespace HospitalRegistration.Pages
     {
         private readonly IHospitalService _hospitalService;
         private readonly IPatientRepository _patientRepository;
-        public IEnumerable<Patient> patients;
         public IndexModel(IHospitalService hospitalService, IPatientRepository patientRepository)
         {
             _hospitalService = hospitalService;
@@ -18,9 +17,9 @@ namespace HospitalRegistration.Pages
         }        
         
 
-        public async Task OnGet()
+        public async Task OnGetAsync()
         {
-            patients = await _patientRepository.GetAllAsync();
+
         }
     }
 }

@@ -23,5 +23,9 @@ namespace HospitalRegistration.DataAccess.Entities
             Specialties = new List<Specialty>();
             DoctorPatients = new List<DoctorPatient>();
         }
+        public Doctor()
+        {
+
+        }
     }
 }

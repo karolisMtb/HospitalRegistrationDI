@@ -23,7 +23,13 @@ namespace HospitalRegistration.DataAccess.Repositories
         {
            return DatabaseContext.DoctorPatients.Include(x => x.Doctor).Where(x => x.PatientId == patientId).Select(x => x.Doctor).ToList();
         }
-            
+
+        public async Task<List<Doctor>> GetDoctorsByNameAsync(string name)
+        {
+            List<Doctor> doctorEmployees = new();
+            doctorEmployees = DatabaseContext.Doctors.Where(x => x.Name == name).ToList();
+            return doctorEmployees;
+        }
     }
 }
 

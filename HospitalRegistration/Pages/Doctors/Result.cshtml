@@ -1,0 +1,30 @@
+﻿@page "/doctors/search/results"
+@model HospitalRegistration.Pages.Doctors.ResultModel
+@{
+    Layout = "../Shared/_LayoutHospital.cshtml";
+    ViewData["Title"] = "Search results";
+}
+
+    <div class="container">
+                <h2>Search results</h2>
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th colspan="2"lspan">Doctor Id</th>
+                    <th>Name</th>
+                    <th>Last name</th>
+                    <th>Specialty(-ies)</th>
+                    <th>Department</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach(var doctor in Model.doctorList) {
+                   <tr>
+                       <td colspan="2">@doctor.Id</td>
+                       <td>@doctor.Name</td>
+                       <td>@doctor.LastName</td>
+                   </tr>
+                }
+            </tbody>
+        </table>
+    </div>

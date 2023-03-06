@@ -43,10 +43,16 @@ namespace HospitalRegistration.BusinessLogic.Services
             _unitOfWork.SaveChanges();
         }
 
-        public async Task<IEnumerable<Department>> GetAllAsync()
+        public async Task<IEnumerable<Department>> GetAllDepartmentsAsync()
         {
             var departmentList = await _departmentRepository.GetAllAsync();
             return departmentList;
+        }
+
+        public async Task<IEnumerable<Doctor>> GetAllDoctorsAsync()
+        {
+            IEnumerable<Doctor> doctorsList = await _doctorRepository.GetAllAsync();
+            return doctorsList;
         }
 
         public async Task AsignDoctorToDepartmentAsync(Guid doctorId, Guid departmentId) //tested
@@ -138,5 +144,17 @@ namespace HospitalRegistration.BusinessLogic.Services
             await _doctorPatientRepository.AddDoctorPatientAsync(doctorPatient);
             await _unitOfWork.SaveChanges();
         }
+
+        public async Task<IEnumerable<Doctor>> FindDoctorsByNameAsync(string name)
+        {
+            List<Doctor> doctors = new();
+            doctors =  await _doctorRepository.GetDoctorsByNameAsync(name);
+            return doctors;
+        }
+
+        public Task<Department> GetDepartmentByIdAsync(Guid departmentId)
+        {
+            return _departmentRepository.GetDepartmentAsync(departmentId);
+        }        
     }
 }

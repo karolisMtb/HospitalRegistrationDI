@@ -4,7 +4,7 @@
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public List<Doctor> Doctors { get; set; }
+        public ICollection<Doctor> Doctors { get; set; }
 
         public Department(string name)
         {

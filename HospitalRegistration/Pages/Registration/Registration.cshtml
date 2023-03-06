@@ -1,0 +1,35 @@
+﻿@page "/registration"
+@model HospitalRegistration.Pages.Registration.RegistrationModel
+@{
+    Layout = "../Shared/_LayoutHospital.cshtml";
+    ViewData["Title"] = "Registration";
+}
+
+@section RightFooter {
+    <img src="~/images/logoPNG.png" />
+}
+
+<h1>@ViewData["Title"]</h1>
+<p>This is where you going to register new patients, doctors and illnesses.</p>
+<p>This will be done via drop down lists</p>
+<div class="container">
+    <a asp-page="create" class="btn btn-primary">Create new doctor</a>
+</div>
+
+<form method="post">
+    <div class="border p-3 mt-4">
+        <div class="row pb-2">
+            <h2 class="text-primary pl-3">Create doctor</h2>
+        </div>
+        <div class="mb-3">
+            Name: 
+            <input type="text" name="doctorName"/>
+        </div>
+        <div class="mb-3">
+            LastName: 
+            <input type="text" name="doctorLastName"/>
+        </div>
+        <button type="submit" class="btn btn-primary">Create</button>
+        <button type="reset" class="btn btn-primary">Reset</button>
+    </div>
+</form>

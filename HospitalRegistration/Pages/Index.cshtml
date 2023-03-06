@@ -4,24 +4,11 @@
 @model IndexModel
 
 @{
+    Layout = "Shared/_LayoutHospital.cshtml";
     ViewData["Title"] = "Home page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
     <h3>Hello there</h3>
-    <table>
-        <tr>
-            <th>Patient Name</th>
-            <th>Patient Id</th>
-        </tr>
-        @foreach(var item in Model.patients){
-            <tr>
-                <td>@item.Name</td>
-                <td>@item.Id</td>
-                <td>@item.DoctorPatients</td>
-            </tr>
-        }
-    </table>
 </div>
