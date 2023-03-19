@@ -15,5 +15,6 @@ namespace HospitalRegistration.DataAccess.Interfaces
         Task<IEnumerable<Doctor>> FindDoctorsByNameAsync(string name);
         Task<IEnumerable<Doctor>> GetAllDoctorsAsync();
         Task<Department> GetDepartmentByIdAsync(Guid departmentId);
+        Task<Doctor> GetDoctorById(Guid doctorId);
     }
 }

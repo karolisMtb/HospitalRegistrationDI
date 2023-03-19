@@ -16,22 +16,28 @@ namespace HospitalRegistration.Pages.Doctors
             _hospitalService = hospitalService;
         }
 
-        [BindProperty(Name = "doctorsName", SupportsGet = true)]
-        public string doctorsName { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public Doctor Doctor { get; set; } 
 
-        [BindProperty(Name = "doctorsLastName", SupportsGet = true)]
-        public string doctorsLastName { get; set; }
 
-        [BindProperty(Name = "specialtyName", SupportsGet = true)]
-        public string specialtyName { get; set; }
-        public IEnumerable<Doctor> doctorList { get; set; }
-        public Department department { get; set; }
+        //[BindProperty(SupportsGet = true)]
+        //public IEnumerable<Doctor> Doctors { get; set; }
 
-        public async void OnGetDoctor()
+        protected internal Doctor Doctor { get; set; }
+
+        [BindProperty]
+        public Guid Id { get; set; }
+
+        public void OnPost()
         {
-            doctorList = await _hospitalService.FindDoctorsByNameAsync(doctorsName);
 
         }
+
+        public async void OnGet(Guid id)
+        {
+            Doctor = await _hospitalService.GetDoctorById(id);
+        }
+
 
 
 

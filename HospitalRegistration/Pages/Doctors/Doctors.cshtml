@@ -1,4 +1,4 @@
-﻿@page "/doctors/search"
+﻿@page "/doctors"
 @model HospitalRegistration.Pages.Doctors.DoctorsModel
 @{
     Layout = "../Shared/_LayoutHospital.cshtml";
@@ -9,28 +9,60 @@
     <img src="~/images/leaves.jpg" />
 }
 <div class="container p-3">
-    <div class="row pt-4">
-        <div class="col-6">
-            <h2>Search doctor</h2>
-        </div>
+    <div class="doctor-search-form">
+            <h2>Doctors</h2>
+        <form method="post">
+            <div class="mb-3">            
+                <label class="labelClass form-label" asp-for="docName">Name</label>
+                <input class="form-control" type="text" asp-for="docName" name="_name" placeholder="Enter name" />
+            </div>
+            <div class="mb-3">     
+                <label class="labelClass form-label" asp-for="docsLastName">Last name</label>
+                <input class="form-control" type="text" asp-for="docsLastName" name="_lastName" placeholder="Enter last name" />
+            </div>        
+            <div class="mb-3">
+                <label class="labelClass form-label" asp-for="specialtyName">Specialty</label>
+                <input class="form-control" type="text" asp-for="specialtyName" name="_specialtyName" placeholder="Enter specialty" />
+            </div>
+            <input type="submit" class="submitBtn btn btn-primary" value="Search"/>
+            <input type="reset" class="clearBtn btn btn-primary" value="Clear"/>
+        </form>
     </div>
-    <form action="" method="post">
-        <div class="mb-3">            
-            <label class="labelClass form-label" asp-for="doctor.Name">Name</label>
-            <input class="form-control" type="text" asp-for="doctor.Name" name="_name" placeholder="Enter name"/>
-        </div>
-        <div class="mb-3">     
-            <label  class="labelClass form-label" asp-for="doctor.LastName">Last name</label>
-            <input class="form-control" type="text" asp-for="doctor.LastName" name="_lastName" placeholder="Enter last name"/>
-        </div>        
-        <div class="mb-3">
-            <label class="labelClass form-label" asp-for="specialty.Name">Specialty</label>
-            <input class="form-control" type="text" asp-for="specialty.Name" name="_specialtyName" placeholder="Enter specialty"/>
-        </div>
-        <input type="submit" class="submitBtn btn btn-primary" value="Search"/>
-        <input type="reset" class="clearBtn btn btn-primary" value="Clear"/>
-    </form>
-</div>
+    <div class="container-fluid doctors-info-container">
+        @foreach(var doctor in Model.DoctorsList) {
+            <a class="" asp-page="result" asp-route-id="@doctor.Id">
+                <div class="person-container container">
+                <figure class="text-center">
+                    <img class="profile-picture rounded mx-auto d-block" src="" alt="" />
+                    <figcaption class="doctors-name">@doctor.Name @doctor.LastName</figcaption>
+                    <div class="doctorDescription department">
+                        @if (doctor.DepartmentId == null)
+                        {
+                            <p>Undefined</p>
+                        }
+                        else
+                        {
+                            <p>@Model._departmentList.Where(department => department.Id == doctor.DepartmentId).First().Name</p>
+                        }
+                    </div>
+                    <div class="doctorDescription specialties">
+                        @if (doctor.Specialties.Count == 0)
+                        {
+                            <p>Undefined</p>
+                        }
+                        else
+                        {
+                            @foreach (var specialty in doctor.Specialties)
+                            {
+                                <p>@specialty.Name</p>
+                            }
+                        }
+                    </div>
+                </figure>
+                </div>
+            </a>
+        }
+    </div>
 
 @*get doctor by name*@
 @*get all doctors

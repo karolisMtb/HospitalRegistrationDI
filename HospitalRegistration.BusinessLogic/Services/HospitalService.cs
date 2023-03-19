@@ -155,6 +155,11 @@ namespace HospitalRegistration.BusinessLogic.Services
         public Task<Department> GetDepartmentByIdAsync(Guid departmentId)
         {
             return _departmentRepository.GetDepartmentAsync(departmentId);
-        }        
+        }
+
+        public Task<Doctor> GetDoctorById(Guid doctorId)
+        {
+            return _doctorRepository.GetDoctorAsync(doctorId);
+        }
     }
 }

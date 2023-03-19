@@ -18,8 +18,7 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<DatabaseContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("SQLServer")), ServiceLifetime.Transient); // testas
 builder.Services.AddScoped<IGeneratorService, DbMockDataGeneratorService>();
 builder.Services.AddScoped<IndexModel>();
-//builder.Services.AddScoped<DoctorsModel>();
-//builder.Services.AddScoped<ResultModel>();
+builder.Services.AddScoped<DoctorsModel>();
 builder.Services.AddScoped<IDepartmentRepository, DepartmentRepository>();
 builder.Services.AddScoped<IPatientRepository, PatientRepository>();
 builder.Services.AddScoped<IDoctorRepository, DoctorRepository>();
